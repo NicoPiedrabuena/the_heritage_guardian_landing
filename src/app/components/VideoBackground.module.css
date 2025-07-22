@@ -1,0 +1,48 @@
+.videoContainer {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    z-index: -1;
+  }
+  
+  .overlay {
+    position: absolute;
+    inset: 0;                  /* top:0; right:0; bottom:0; left:0 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;              /* texto en blanco */
+    text-align: center;
+    z-index: 1;
+  }
+  
+  .logo {
+    width: 120px;              /* ajusta a tu gusto */
+    margin-bottom: 1rem;
+  }
+  
+  .title {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .subtitle {
+    font-size: 1.25rem;
+    margin: 0.5rem 0 0;
+  }
+  
