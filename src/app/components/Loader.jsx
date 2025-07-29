@@ -5,13 +5,7 @@ import { useEffect, useState } from "react";
 
 export default function Loader() {
   return (
-    <div
-     style={{
-  position: "fixed",
-  left: 200,
-  top: 250,
-  inset: 0,
-}}
+    <div 
     >
       <img
         src="/logo/logo.png"   // asegurate que esté en /public/logo/logo.png
@@ -27,7 +21,7 @@ export default function Loader() {
       <style>{`
         @keyframes pulse {
           0% { transform: scale(1); }
-          50% { transform: scale(1.35); }
+          50% { transform: scale(1.25); }
           100% { transform: scale(1); }
         }
       `}</style>
