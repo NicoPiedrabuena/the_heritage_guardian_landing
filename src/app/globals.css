@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Paleta terrosa (ejemplo: “amber” cálido) */
+  --brand-primary: #d97706;        /* base: amber-600 */
+  --brand-primary-hover: #f59e0b;  /* hover: amber-500 */
+
+  /* Colores del mapa para países inactivos */
+  --map-inactive: #e5e7eb;         /* gray-200 */
+  --map-inactive-hover: #d1d5db;   /* gray-300 */
+  --map-stroke: #ffffff;
 }
 
 @theme inline {

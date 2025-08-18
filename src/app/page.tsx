@@ -13,7 +13,7 @@ export default function Home() {
      <OpeningSection />
 
       </VideoBackground>
-     <MapSection />
+     <MapSection /> 
      <LegacySection />
      <CountrySection />
      <AboutUsSection />
