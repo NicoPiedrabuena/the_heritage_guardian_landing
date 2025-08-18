@@ -1,9 +1,8 @@
 import Loader from "./components/Loader";
-
+import styles from "./components/VideoBackground.module.css"
 export default function Home() {
   return (
-    <div
-      style={{
+        <div className={styles.videoContainer}  style={{
         position: "fixed",
         inset: 0,
         backgroundImage: "url('/logo/bg.jpg')",
@@ -15,8 +14,16 @@ export default function Home() {
         justifyContent: "center",
         zIndex: 9999,
         color: "white",
-      }}
-    >
+      }} >
+      <video className={styles.video} autoPlay muted loop playsInline>
+        <source src="/videos/video_reducido.mp4" type="video/mp4" />
+        Tu navegador no soporta video.
+      </video>
+
+      {/* Si quieres meter más secciones debajo */}
+ 
+    
+  
       {/* Columna izquierda: loader */}
       <div
         style={{
@@ -53,7 +60,7 @@ export default function Home() {
           0%, 100% { opacity: 1; }
           50% { opacity: 0.3; }
         }
-      `}</style>
-    </div>
+      `}</style> 
+      </div>
   );
 }
