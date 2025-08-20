@@ -20,9 +20,7 @@ export default function Home() {
         Tu navegador no soporta video.
       </video>
 
-      {/* Si quieres meter más secciones debajo */}
  
-    
   
       {/* Columna izquierda: loader */}
       <div
