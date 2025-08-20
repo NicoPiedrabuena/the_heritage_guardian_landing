@@ -16,11 +16,13 @@ export const metadata: Metadata = {
   title: "The Heritage Guardian",
   description: "Página en construcción con Next.js",
   icons: {
-    icon: "/logo/favi-v2.png", // asegurate que esté en /public/logo/favi.png
-    apple: "/logo/apple-touch-icon.png", // opcional
+    icon: [
+      { url: "/favicon.png", type: "image/png", sizes: "32x32" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: "/apple-touch-icon.png",
   },
 };
-
 export default function RootLayout({
   children,
 }: {
