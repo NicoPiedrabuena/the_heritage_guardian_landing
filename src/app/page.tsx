@@ -16,19 +16,10 @@ export default function Home() {
         color: "white",
       }} >
       <video className={styles.video} autoPlay muted loop playsInline>
-        <source src="/videos/video_reducido.mp4" type="video/mp4" />
+        <source src="/videos/video_reducidito.mp4" type="video/mp4" />
         Tu navegador no soporta video.
       </video>
 
-<<<<<<< HEAD
-      </VideoBackground>
-     <MapSection /> 
-     <LegacySection />
-     <CountrySection />
-     <AboutUsSection />
-     <Footer /> 
-        </div>
-=======
  
   
       {/* Columna izquierda: loader */}
@@ -69,6 +60,5 @@ export default function Home() {
         }
       `}</style> 
       </div>
->>>>>>> 699108796061d11de4db8f32ce63a74b213baf52
   );
 }
