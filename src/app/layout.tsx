@@ -14,11 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "The Heritage Guardian",
-  description: "Página en construcción con Next.js",
-  icons: {
-    icon: "/logo/favi.ico", // asegurate que esté en /public/logo/favi.png
-    apple: "/logo/apple-touch-icon.png", // opcional
-  },
+  description: "Página en construcción con Next.js", 
 };
 
 export default function RootLayout({
@@ -27,7 +23,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es">
+     <html lang="en">
+      <head>
+        <link rel="icon" href="logo/icon.ico" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
