@@ -8,7 +8,7 @@ export default function Loader() {
     <div 
     >
       <img
-        src="/logo/logo.png"   // asegurate que esté en /public/logo/logo.png
+        src="/logo/logo_white.png"   // asegurate que esté en /public/logo/logo.png
         alt="Logo"
         style={{
           width: "400px",
