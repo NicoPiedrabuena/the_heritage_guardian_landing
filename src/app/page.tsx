@@ -16,7 +16,7 @@ export default function Home() {
         color: "white",
       }} >
       <video className={styles.video} autoPlay muted loop playsInline>
-        <source src="/videos/video_reducidito.mp4" type="video/mp4" />
+        <source src="/videos/video_reducido.mp4" type="video/mp4" />
         Tu navegador no soporta video.
       </video>
 
