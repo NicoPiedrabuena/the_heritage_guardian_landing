@@ -41,7 +41,7 @@ export default function Home() {
         muted
         loop
         autoPlay
-        poster="/logo/bg.jpg"
+         
       >
         <source
           src="/videos/video.mp4"
