@@ -9,6 +9,9 @@ export default function Home() {
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
+
+    // iOS moderno usa playsInline, por compat extra seteamos el legacy via JS
+    v.setAttribute("webkit-playsinline", "true");
     v.muted = true;
 
     const tryPlay = () => v.play().catch(() => {});
@@ -35,8 +38,6 @@ export default function Home() {
         className={styles.video}
         preload="auto"
         playsInline
-        // @ts-ignore (compat iOS viejo)
-        webkit-playsinline="true"
         muted
         loop
         autoPlay
@@ -49,15 +50,15 @@ export default function Home() {
         Tu navegador no soporta video.
       </video>
 
-      {/* Capa para contenido (dos columnas en desktop, una en mobile) */}
       <div className={styles.overlay}>
         <div className={styles.content}>
           <div className={styles.left}>
-            <Loader />
+            <div className={styles.loaderWrap}>
+              <Loader />
+            </div>
           </div>
-
           <div className={styles.right}>
-            <p className={styles.title}>Under Construction</p>
+            <h1 className={styles.title}>Under Construction</h1>
           </div>
         </div>
       </div>
