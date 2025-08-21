@@ -1,48 +1,114 @@
 .videoContainer {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: -1;
+  pointer-events: none; /* evita tapar la UI */
+}
+
+.overlay {
+  position: absolute;
+  inset: 0; /* top/right/bottom/left: 0 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+
+  /* leve gradiente para mejorar legibilidad del texto */
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.25),
+    rgba(0,0,0,0.45)
+  );
+
+  padding: clamp(16px, 4vw, 40px);
+}
+
+/* CONTENIDO RESPONSIVE
+   - Desktop: 2 columnas (Loader | Texto)
+   - Mobile: 1 columna apilada
+*/
+.content {
+  width: min(1200px, 100%);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(16px, 3vw, 48px);
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr;
   }
-  
-  .video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    transform: translate(-50%, -50%);
-    object-fit: cover;
-    z-index: -1;
-  }
-  
-  .overlay {
-    position: absolute;
-    inset: 0;                  /* top:0; right:0; bottom:0; left:0 */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: white;              /* texto en blanco */
-    text-align: center;
-    z-index: 1;
-  }
-  
-  .logo {
-    width: 120px;              /* ajusta a tu gusto */
-    margin-bottom: 1rem;
-  }
-  
-  .title {
-    font-size: 3rem;
-    font-weight: bold;
-    margin: 0;
-  }
-  
-  .subtitle {
-    font-size: 1.25rem;
-    margin: 0.5rem 0 0;
-  }
-  
+}
+
+.left, .right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Si tu Loader tiene texto o elementos internos, este wrapper ayuda a escalar */
+.loaderWrap {
+  transform-origin: center;
+  /* escala suave según ancho: entre 0.9 y 1.15 */
+  transform: scale(clamp(0.9, 1.5vw, 1.15));
+}
+
+/* Si usás un logo extra arriba del texto */
+.logo {
+  width: clamp(80px, 10vw, 140px);
+  margin-bottom: 0.75rem;
+}
+
+/* Título “Under Construction” */
+.title {
+  margin: 0;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  line-height: 1.2;
+  text-align: center;
+  /* Blanco puro */
+  color: #ffffff;
+
+  /* Tamaño más grande y fluido */
+  font-size: clamp(28px, 6vw, 64px);
+
+  /* Efecto del loader: parpadeo/pulso */
+  animation: loaderBlink 1.5s infinite;
+}
+
+.subtitle {
+  margin: 0.5rem 0 0;
+  /* tamaño fluido: min 14px, ideal 2.5vw, máx 18px */
+  font-size: clamp(14px, 2.5vw, 18px);
+  opacity: 0.9;
+}
+@keyframes loaderBlink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.05); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* Respeta usuarios con reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .title { animation: none; }
+}
