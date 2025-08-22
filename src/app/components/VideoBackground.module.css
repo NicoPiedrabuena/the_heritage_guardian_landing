@@ -92,7 +92,7 @@
   color: #ffffff;
 
   /* Tamaño más grande y fluido */
-  font-size: clamp(10px, 6vw, 30px);
+  font-size: clamp(4px, 5vw, 30px);
 
   /* Efecto del loader: parpadeo/pulso */
   animation: loaderBlink 1.5s infinite;
