@@ -13,18 +13,11 @@ export default function Loader() {
         style={{
           width: "400px",
           height: "auto",
-          animation: "pulse 3s infinite", // animación leve para que no quede tan plano
+          
         }}
       />
     
-
-      <style>{`
-        @keyframes pulse {
-          0% { transform: scale(1); }
-          50% { transform: scale(1.25); }
-          100% { transform: scale(1); }
-        }
-      `}</style>
+ 
     </div>
   );
 }
