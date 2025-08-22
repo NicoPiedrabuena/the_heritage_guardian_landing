@@ -33,22 +33,19 @@ export default function Home() {
 
   return (
     <div className={styles.videoContainer}>
-      <video
-        ref={videoRef}
-        className={styles.video}
-        preload="auto"
-        playsInline
-        muted
-        loop
-        autoPlay
-         
-      >
-        <source
-          src="/videos/video.mp4"
-          type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'
-        />
-        Tu navegador no soporta video.
-      </video>
+     <video
+  ref={videoRef}
+  className={styles.video}
+  src="/videos/video.mp4"
+  preload="metadata"
+  playsInline
+  muted
+  loop
+  autoPlay
+  controls={false}
+  disablePictureInPicture
+  onLoadedData={() => videoRef.current?.play().catch(() => {})}
+/>
 
       <div className={styles.overlay}>
         <div className={styles.content}>
