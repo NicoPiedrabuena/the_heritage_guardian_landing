@@ -1,9 +1,4 @@
-html, body {
-  margin: 0;
-  height: 100%;
-  overflow: hidden; /* bloquea el scroll global */
-}
-
+ 
 .videoContainer {
   position: fixed;  /* fijo a la pantalla */
   inset: 0;         /* top/right/bottom/left:0 */
