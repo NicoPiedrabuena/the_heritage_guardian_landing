@@ -14,7 +14,39 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "The Heritage Guardian",
-  description: "Página en construcción con Next.js", 
+  description: "Página en construcción con Next.js",
+
+  // Favicon
+  icons: {
+    icon: "/logo/favicon.ico",
+    apple: "/favicon.png",
+  },
+
+  // Open Graph
+  openGraph: {
+    title: "The Heritage Guardian",
+    description: "-",
+    url: "https://www.theheritageguardian.com",
+    siteName: "The Heritage Guardian",
+    images: [
+      {
+        url: "/logo/logo.png", // poné tu logo o una imagen representativa
+        width: 1200,
+        height: 630,
+        alt: "The Heritage Guardian",
+      },
+    ],
+    locale: "es_ES",
+    type: "website",
+  },
+
+  // Twitter
+  twitter: {
+    card: "summary_large_image",
+    title: "The Heritage Guardian",
+    description: "Página en construcción con Next.js",
+    images: ["/logo/og-image.png"],
+  },
 };
 
 export default function RootLayout({
@@ -23,10 +55,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-     <html lang="en">
-      <head>
-        <link rel="icon" href="/logo/favicon.ico" />
-      </head>
+    <html lang="es">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
