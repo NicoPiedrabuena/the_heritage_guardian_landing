@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     siteName: "The Heritage Guardian",
     images: [
       {
-        url: "/logo/logo.png", // poné tu logo o una imagen representativa
+        url: "/logo/apple-touch-icon.png", // poné tu logo o una imagen representativa
         width: 1200,
         height: 630,
         alt: "The Heritage Guardian",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "The Heritage Guardian",
     description: "Página en construcción con Next.js",
-    images: ["/logo/og-image.png"],
+    images: ["/logo/apple-touch-icon.png"],
   },
 };
 
