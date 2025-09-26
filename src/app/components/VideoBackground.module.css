@@ -1,46 +1,43 @@
- 
-.videoContainer {
-  position: fixed;  /* fijo a la pantalla */
+.videoContainer { 
+  position: relative; /* Cambia de fixed a relative */
   inset: 0;         /* top/right/bottom/left:0 */
   width: 100vw;
-
   height: 100vh;    /* fallback */
-  height: 100dvh;   /* iOS/Android modernos */
-
+  height: 100dvh;   /* iOS/Android modernos */ 
   overflow: hidden;
+  z-index: 0;
 }
 
 @supports (height: 100svh) {
   .videoContainer {
     height: 100svh; /* iOS Safari moderno corrige barra */
   }
-}
-.video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-  pointer-events: none;
+} 
+.bottomTear {
+  position: fixed;       /* igual que el video (que es fixed) */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 140px;         /* ajusta alto del “rasgado” */
+  pointer-events: none;  /* que no bloquee clics */
+  z-index: -5;           /* entre el video (-10) y la UI por si la tienes negativa; si tu overlay está arriba, usa un z-index mayor que el del video */
+  background-image: url("/images/edges/tear-bottom.png"); /* <-- tu PNG */
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: 100% 100%; /* o 'cover' si tu PNG es más alto */
 }
 
 .overlay {
-   position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  /* leve gradiente para mejorar legibilidad del texto */
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.25),
-    rgba(0,0,0,0.45)
-  );
+ align-items: flex-end;   /* ⬅️ lo manda hacia abajo */
+  justify-content: flex-start; /* ⬅️ lo manda hacia la izquierda */
+  text-align: center;
 
-  padding: clamp(16px, 4vw, 40px);
+  position: absolute; /* Para usarlo sobre video/fondo */
+  inset: 0;
+
+   padding: 8rem 3.4rem; /* margen desde bordes */
+  background: rgba(0, 0, 0, 0.35); /* Oscurece el fondo para contraste */
 }
 
 /* CONTENIDO RESPONSIVE
@@ -48,54 +45,94 @@
    - Mobile: 1 columna apilada
 */
 .content {
-  width: min(1200px, 100%);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(16px, 3vw, 48px);
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+   max-width: 500px; 
+  padding: 1rem;
 }
 
-@media (max-width: 768px) {
-  .content {
-    grid-template-columns: 1fr;
+.cta {
+  padding: 0.8rem 2rem;
+  border: 2px solid #fff;
+  background: transparent;
+  color: #fff;
+  font-size: 1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cta:hover {
+  background: #fff;
+  color: #000;
+}
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+  .title {
+    font-size: 1.8rem;
+  }
+  .logo {
+    max-width: 160px;
   }
 }
 
-.left, .right {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+@media (max-width: 768px) {
+  .overlay {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1.5rem;
+  }
+    .content {
+    align-items: center;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+  .cta {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.9rem;
+  }
+  .logo {
+    max-width: 140px;
+  }
 }
 
-/* Si tu Loader tiene texto o elementos internos, este wrapper ayuda a escalar */
-.loaderWrap {
-  transform-origin: center;
-  /* escala suave según ancho: entre 0.9 y 1.15 */
-  transform: scale(clamp(0.9, 1.5vw, 1.15));
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.2rem;
+  }
+  .cta {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+  }
+  .logo {
+    max-width: 120px;
+  }
 }
 
+ 
+
+ 
 /* Si usás un logo extra arriba del texto */
 .logo {
-  width: clamp(80px, 10vw, 140px);
-  margin-bottom: 0.75rem;
+  max-width: 200px;
+  width: 40vw;
+  height: auto;
 }
 
-/* Título “Under Construction” */
+
+/* --- Título --- */
 .title {
-  margin: 0;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  line-height: 1.2;
-  text-align: center;
-  /* Blanco puro */
-  color: #ffffff;
-
-  /* Tamaño más grande y fluido */
-  font-size: clamp(4px, 5vw, 30px);
-
-  /* Efecto del loader: parpadeo/pulso */
-  animation: loaderBlink 1.5s infinite;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #fff;
+  line-height: 1.3;
+}
+.title em {
+  font-style: italic;
 }
 
 .subtitle {

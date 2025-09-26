@@ -1,5 +1,7 @@
-html, body {
-  margin: 0;
-  height: 100%;
-  overflow: hidden; /* si querés bloquear el scroll global */
+html, body { 
+  background: url("/images/fondo.png") center center / cover no-repeat fixed;
+  width: 100vw;
+  padding: 0;
+  margin :0;
+  overflow-x: hidden;
 }
