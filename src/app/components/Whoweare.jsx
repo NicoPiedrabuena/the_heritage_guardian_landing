@@ -2,31 +2,19 @@ import React, { useRef } from "react";
 
 const MASK_URL = "/mascaras/mascara_vertical.png";
 
-function Title({ lead, emph }) {
+function TitleWithRule({ text }) {
   return (
-    <h2 style={{ fontSize: 36, fontWeight: 800, margin: "12px 0 6px" }}>
-      {lead}{" "}
-      <em style={{ fontFamily: "serif", fontWeight: 900, fontStyle: "italic" }}>
-        {emph}
-      </em>
-    </h2>
-  );
-}
-function Rule() {
-  return (
-    <div
-      style={{
-        height: 1,
-        width: "72%",
-        background: "rgba(0,0,0,.45)",
-        margin: "6px 0 14px",
-      }}
-    />
+    <div>
+      <h2 className="title-h2">
+        {text}
+      </h2>
+      <div className="rule-line" style={{ marginTop: '4px' }} />
+    </div>
   );
 }
 function P({ children }) {
   return (
-    <p style={{ margin: "0 0 12px", lineHeight: 1.6, color: "rgba(0,0,0,.82)" }}>
+    <p className="texto-parrafos">
       {children}
     </p>
   );
@@ -36,56 +24,28 @@ export default function Whoweare() {
   const videoRef = useRef(null);
 
   return (
-    <section
-      style={{
-        padding: "56px 16px",
-        display: "flex",
-        flexWrap: "wrap",
-        gap: 40,
-        justifyContent: "center",
-        alignItems: "stretch",
-        color: "#1b1b1b",
-      }}
-    >
+    <section className="who-we-are">
       {/* Columna de texto */}
-      <div
-        style={{
-          flex: "1 1 520px",
-          maxWidth: 760,
-          minWidth: 280,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-      >
-        <Title lead="Who" emph="we are" />
-        <Rule />
-        <P>
+      <div className="who-we-are-content">
+        <TitleWithRule text="WHO WE ARE" />
+        <P className="">
           The Heritage Guardian is an <b><i>international cultural alliance</i></b>{" "}
-          dedicated to transforming <b><i>living heritage into global presence</i></b>.
+          dedicated to turning <b><i>living heritage into global presence.</i></b>
         </P>
 
-        <Title lead="What do" emph="we do" />
-        <Rule />
-        <P>
-          We <b>highlight nations</b> as cultural leaders by <b>showcasing</b> their
-          traditions, stories, and identity on the world stage.
+        <TitleWithRule text="WHAT WE DO" />
+        <P className="">
+          We position and promote the <b><i>culture and identity</i></b>, of each country on the global stage through cinematic documentaries, digital capsules, books, and educational content.
         </P>
 
-        <Title lead="How do" emph="we do it" />
-        <Rule />
-        <P>
-          Through <b>strategic alliances</b> with ministries, embassies, and cultural
-          institutions, we create <b>high-impact productions</b> and initiatives that
-          connect cultures with global audiences.
+        <TitleWithRule text="HOW WE DO IT" />
+        <P className="">
+          Through <b><i>alliances with ministries, embassies, and cultural institutions.</i></b> <br></br> Also with brands and banks that seek to associate with that identity, becoming cultural sponsors and amplifying international reach.
         </P>
 
-        <Title lead="How do" emph="we do it" />
-        <Rule />
-        <P>
-          Because in today’s world, the nations that share their culture are the ones{" "}
-          <b>shaping</b> the global narrative. At The Heritage Guardian{" "}
-          <b>we believe that visibility is preservation</b>.
+        <TitleWithRule text="WHY WE DO IT" />
+         <P className="">
+          Because culture shared beyond borders becomes influence. Just as <b><i>football unites across borders</i></b>, culture has the same power, to inspire, to connect.<br></br> We believe that <b><i>visibility is preservation</i></b>: it strengthens nation branding, attracts tourism and investment, and secures a cultural legacy for future generations.
         </P>
       </div>
 

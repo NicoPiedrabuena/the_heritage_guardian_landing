@@ -4,25 +4,26 @@ import "react-tooltip/dist/react-tooltip.css";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { Tooltip } from "react-tooltip";
 import React, { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+// importa la lista global
+import { ACTIVE_COUNTRIES } from "../../countryData";
 
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
-const ACTIVE_COUNTRIES = [
-  "Argentina","Morocco","India","Saudi Arabia","Indonesia","Mauritius",
-  "Mexico","Brazil","Mongolia",
-];
 
 export default function MapSection() {
   const headerRef = useRef(null);
   const footerRef = useRef(null);
   const [mapHeight, setMapHeight] = useState(400);
+  const [windowWidth, setWindowWidth] = useState(1200);
+  const router = useRouter();
 
   const colors = {
-    baseFill: "#f5ebdb",
-    activeFill: "#b6693b",
-    stroke:   "#5a3c22",
-    title:    "#2a2017",
-    copy:     "rgba(42,32,23,.9)",
-    accent:   "#b53a33",
+    baseFill: "var(--color-mapa-base)",
+    activeFill: "var(--color-mapa-activo)",
+    stroke:   "var(--color-mapa-stroke)",
+    title:    "var(--color-mapa-titulo)",
+    copy:     "var(--color-mapa-copy)",
+    accent:   "var(--color-mapa-accent)",
   };
 
   // Calcula alto exacto disponible para el mapa (sin blancos arriba/abajo)
@@ -46,57 +47,36 @@ export default function MapSection() {
     };
   }, []);
 
-  const handleCountryClick = (name) => console.log("País:", name);
+  useEffect(() => {
+    const updateWidth = () => setWindowWidth(window.innerWidth);
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
+
+  const handleCountryClick = (name) => {
+    // Navega a la pantalla del país
+    router.push(`/country/${encodeURIComponent(name)}`);
+  };
 
   return (
-    <section
-      style={{
-        background: "transparent",
-        minHeight: "100vh",
-        display: "grid",
-        gridTemplateRows: "auto 1fr auto",
-        rowGap: 0,
-        padding: "4px 6px",
-      }}
-    >
+    <section className="map-section">
       {/* HEADER compactado */}
-      <div ref={headerRef} style={{ textAlign: "center" }}>
-        <h2
-          style={{
-            margin: 0,
-            fontSize: "clamp(26px, 4vw, 44px)",
-            color: colors.title,
-            fontWeight: 800,
-            lineHeight: 1.05,
-          }}
-        >
+      <div ref={headerRef} className="map-header">
+        <h2 className="title">
           Our Global{" "}
-          <em style={{ fontFamily: "serif", fontStyle: "italic", fontWeight: 900 }}>
+          <em className="title-emphasis">
             Cultural Map
           </em>
         </h2>
 
-        <p
-          style={{
-            margin: "4px auto 2px",
-            maxWidth: 760,
-            color: colors.copy,
-            lineHeight: 1.4,
-            fontSize: "clamp(12px, 1.5vw, 15px)",
-          }}
-        >
+        <p className="map-description">
           Around the world, The Heritage Guardian has worked alongside ministries, embassies, and
           cultural institutions in <b>8 countries</b>, documenting more than <b>30</b> emblematic
           cultural events and bringing them to international audiences.
         </p>
 
-        <div
-          style={{
-            fontWeight: 700,
-            marginTop: 0,
-            fontSize: "clamp(11px, 1.4vw, 14px)",
-          }}
-        >
+        <div className="map-instruction">
           <span style={{ fontStyle: "italic" }}>
             Click <span style={{ color: colors.accent }}>on</span> a highlighted country
           </span>{" "}
@@ -106,17 +86,15 @@ export default function MapSection() {
 
       {/* MAP CONTAINER — se adapta al alto disponible y recorta cualquier extra */}
       <div
-        style={{
-          placeSelf: "center",
-          width: "min(96vw, 1100px)",
-          height: mapHeight + "px",
-          overflow: "hidden",                // <-- sin blancos
-        }}
+        className={`map-container ${windowWidth < 600 ? 'map-container-mobile' : ''}`}
       >
         <ComposableMap
-          projectionConfig={{ scale: 158 }}
-          preserveAspectRatio="xMidYMid slice" // <-- llena y recorta
-          style={{ width: "100%", height: "100%", background: "transparent" }}
+          projectionConfig={{ scale: windowWidth < 600 ? 180 : 180 }} // escala mayor en mobile
+          style={{
+            width: "100%",
+            height: "100%",
+            background: "transparent",
+          }}
         >
           <Geographies geography={GEO_URL}>
             {({ geographies }) =>
@@ -157,19 +135,7 @@ export default function MapSection() {
       </div>
 
       {/* FOOTER / MÉTRICAS compactas */}
-      <div
-        ref={footerRef}
-        style={{
-          placeSelf: "center",
-          width: "min(96vw, 860px)",
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          gap: 8,
-          textAlign: "center",
-          color: colors.title,
-          marginTop: 0,
-        }}
-      >
+      <div ref={footerRef} className="map-metrics">
         <Metric big="+ 500M" caption="Global Impressions" />
         <Metric big="+ 9"    caption="Countries" />
         <Metric big="+ 30"   caption="Cultural Events" />
@@ -194,9 +160,9 @@ export default function MapSection() {
 
 function Metric({ big, caption }) {
   return (
-    <div style={{ display: "grid", gap: 1, justifyItems: "center" }}>
-      <div style={{ fontSize: "clamp(20px, 2.6vw, 600px)", fontWeight: 900 }}>{big}</div>
-      <div style={{ fontSize: "clamp(11px, 1.2vw, 23px)", opacity: 0.85 }}>{caption}</div>
+    <div className="map-metric">
+      <div className="map-metric-big">{big}</div>
+      <div className="map-metric-caption">{caption}</div>
     </div>
   );
 }

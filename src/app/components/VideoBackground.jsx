@@ -1,6 +1,5 @@
 "use client"; 
 import React, { useRef, useEffect } from "react";
-import styles from "./VideoBackground.module.css";
 export default function VideoBackground() {
   const videoRef = useRef(null); // <-- removed type annotation
 
@@ -30,10 +29,10 @@ export default function VideoBackground() {
   }, []);
 
   return (
-    <div className={styles.videoContainer}>
+    <div className="video-container">
       <video
         ref={videoRef}
-          className="fixed inset-0 w-full h-full object-cover -z-10 pointer-events-none"
+        className="fixed inset-0 w-full h-full object-cover -z-10 pointer-events-none"
         src="/videos/video.mp4"
         preload="metadata"
         playsInline
@@ -44,23 +43,22 @@ export default function VideoBackground() {
         disablePictureInPicture
         onLoadedData={() => videoRef.current?.play().catch(() => {})}
       />
-    <div className={styles.bottomTear} aria-hidden />
-      <div className={styles.overlay}>
-  <div className={styles.content}>
-    <img
-      src="/logo/logo_white.png"
-      alt="The Heritage Guardian Logo"
-      className={styles.logo}
-    />
+      <div className="video-bottom-tear" aria-hidden />
+      <div className="video-overlay">
+        <div className="video-content">
+          <img
+            src="/logo/logo_white.png"
+            alt="The Heritage Guardian Logo"
+            className="video-logo"
+          />
 
-    <h1 className={styles.title}>
-      A Global Alliance for <em>Living Culture</em>
-    </h1>
+          <h1 className="video-title">
+            A Global Alliance for <em>Living Culture</em>
+          </h1>
 
-    <button className={styles.cta}>Discover the alliance</button>
-  </div>
-</div>
-
+          <button className="cta-button">Discover the alliance</button>
+        </div>
+      </div>
     </div>
   );
 } 
