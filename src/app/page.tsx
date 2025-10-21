@@ -1,7 +1,7 @@
 "use client";   
 import BackgroundVideo from "./components/VideoBackground";
 import AboutUs from "./components/Whoweare";
-import Joining from "./components/Joining";
+import Joining from "./components/Whatyouget";
 import MapSection from "./components/MapSection";
 import Footer from "./components/Footer";
 import TrustedDiplomacy from "./components/TrustedDiplomacy";

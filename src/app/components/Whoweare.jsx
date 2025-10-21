@@ -1,17 +1,9 @@
-import React, { useRef } from "react";
+"use client";
+
+import React, { useRef, useEffect, useState } from "react";
+import TitleWithRule from "./TitleWithRule";
 
 const MASK_URL = "/mascaras/mascara_vertical.png";
-
-function TitleWithRule({ text }) {
-  return (
-    <div>
-      <h2 className="title-h2">
-        {text}
-      </h2>
-      <div className="rule-line" style={{ marginTop: '4px' }} />
-    </div>
-  );
-}
 function P({ children }) {
   return (
     <p className="texto-parrafos">
@@ -22,45 +14,54 @@ function P({ children }) {
 
 export default function Whoweare() {
   const videoRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 700);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <section className="who-we-are">
       {/* Columna de texto */}
       <div className="who-we-are-content">
-        <TitleWithRule text="WHO WE ARE" />
+        <TitleWithRule text="WHO WE ARE"  style={{ fontSize: 'clamp(18px, 3.2vw, 32px)', lineHeight: 1.05, margin: 0 }} />
         <P className="">
           The Heritage Guardian is an <b><i>international cultural alliance</i></b>{" "}
           dedicated to turning <b><i>living heritage into global presence.</i></b>
         </P>
 
-        <TitleWithRule text="WHAT WE DO" />
+        <TitleWithRule text="WHAT WE DO" style={{ fontSize: 'clamp(18px, 3.2vw, 32px)', lineHeight: 1.05, margin: 0 }} />
         <P className="">
           We position and promote the <b><i>culture and identity</i></b>, of each country on the global stage through cinematic documentaries, digital capsules, books, and educational content.
         </P>
 
-        <TitleWithRule text="HOW WE DO IT" />
+        <TitleWithRule text="HOW WE DO IT" style={{ fontSize: 'clamp(18px, 3.2vw, 32px)', lineHeight: 1.05, margin: 0 }} />
         <P className="">
           Through <b><i>alliances with ministries, embassies, and cultural institutions.</i></b> <br></br> Also with brands and banks that seek to associate with that identity, becoming cultural sponsors and amplifying international reach.
         </P>
-
-        <TitleWithRule text="WHY WE DO IT" />
+        
+        <TitleWithRule text="WHY WE DO IT" style={{ fontSize: 'clamp(18px, 3.2vw, 32px)', lineHeight: 1.05, margin: 0 }} />
          <P className="">
           Because culture shared beyond borders becomes influence. Just as <b><i>football unites across borders</i></b>, culture has the same power, to inspire, to connect.<br></br> We believe that <b><i>visibility is preservation</i></b>: it strengthens nation branding, attracts tourism and investment, and secures a cultural legacy for future generations.
         </P>
       </div>
 
-      {/* Columna de video */}
-      <div
-        style={{
-          flex: "1 1 360px",
-          minWidth: 280,
-          maxWidth: 460,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div style={{ position: "relative", width: "100%", aspectRatio: "2 / 3" }}>
+      {/* Columna de video (oculta en móvil) */}
+      {!isMobile && (
+        <div
+          style={{
+            flex: "1 1 360px",
+            minWidth: 280,
+            maxWidth: 460,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div style={{ position: "relative", width: "100%", aspectRatio: "2 / 3" }}>
           {/* tenue overlay para contraste */}
           <div
             aria-hidden
@@ -111,8 +112,9 @@ export default function Whoweare() {
 
           {/* Fallback: si no hay soporte de mask-composite, mostramos sin recorte */}
           <noscript />
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }
