@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;600;700;900&display=swap');
+
+/* Reset / base */
+* { box-sizing: border-box; }
+html, body, #__next { height: 100%; }
+body {
+  margin: 0;
+  font-family: 'Work Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2a2017;
+  background: #fff;
+}
+
+/* Variables útiles */
+:root {
+  --font-sans: 'Work Sans', sans-serif;
+}
+
+/* Evitar márgenes inesperados en imágenes e inputs */
+img { display: block; max-width: 100%; height: auto; }
+button, input, select, textarea { font-family: var(--font-sans); }
+
+/* Opcional: clases utilitarias mínimas */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+
+/* Simple scroll reveal utility: lightweight and deterministic */
+.scroll-reveal { 
+  opacity: 0; 
+  transform: translateY(22px);
+  transition: opacity 480ms cubic-bezier(.22,.9,.29,1), transform 480ms cubic-bezier(.22,.9,.29,1);
+  will-change: opacity, transform;
+}
+.scroll-reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* If you want the element to remain visible once revealed, add data-scroll-once="true" to the element. */
+
+/* Debug helper: add .show-reveals to body to force all scroll reveals visible for testing */
+body.show-reveals .scroll-reveal { opacity: 1; transform: none; }
+
+/* Smooth anchor scroll behaviour */
+html { scroll-behavior: smooth; }

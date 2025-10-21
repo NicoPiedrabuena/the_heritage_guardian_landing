@@ -3,6 +3,17 @@ import React, { useRef, useEffect } from "react";
 export default function VideoBackground() {
   const videoRef = useRef(null); // <-- removed type annotation
 
+  // scroll suave hacia la sección "who we are"
+  const goToWhoWeAre = () => {
+    const target = document.querySelector('.who-we-are');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      // fallback: pequeño desplazamiento al top si no existe la sección en la página actual
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
@@ -52,13 +63,13 @@ export default function VideoBackground() {
             className="video-logo"
           />
 
-          <h1 className="video-title">
+          <h1 className="title-white">
             A Global Alliance for <em>Living Culture</em>
           </h1>
 
-          <button className="cta-button">Discover the alliance</button>
+          <button className="cta-button" onClick={goToWhoWeAre}>Discover the alliance</button>
         </div>
       </div>
     </div>
   );
-} 
+}
