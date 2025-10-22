@@ -108,7 +108,7 @@ export default function SectionVideo({ height = "100vh" }) {
           <img
             src="/logo/logo_white.png"
             alt="The Heritage Guardian"
-            style={{ width: 180, height: "auto", marginBottom: 16 }}
+            style={{ width: 320, height: "auto", marginBottom: 16 }}
           />
           <h1
             style={{

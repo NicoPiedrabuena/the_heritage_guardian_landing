@@ -66,19 +66,22 @@ export default function CountryScreen() {
 						maxWidth: "100vw",
 					}}
 				/>
-				<div
-					style={{
-						position: "absolute",
-						top: 0,
-						left: 0,
-						width: "100%",
-						zIndex: 10,
-						background: "rgba(255,255,255,0.10)",
-						backdropFilter: "blur(2px)",
-					}}
-				>
-					<CountryNavbar />
-				</div>
+			{/* Overlay del banner */}
+<div
+  style={{
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    zIndex: 10,
+    background: "rgba(255,255,255,0.10)",
+    backdropFilter: "blur(2px)",
+  }}
+  className="nav-desktop"  // 👈 NO se ve en mobile, sí desde md+
+>
+  <CountryNavbar />
+</div>
+
 				<h1
 					style={{
 						color: "#fff",
