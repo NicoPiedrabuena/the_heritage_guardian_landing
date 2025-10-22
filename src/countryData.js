@@ -8,7 +8,7 @@ export const COUNTRY_TIMELINES = {
   Argentina: [
     {
       year: 2024,
-      image: "/images/timeline_sample.jpg",
+      image: "/timeline/argentina/ejemplo.png",
       title: "Full coverage of Argentina’s most important equestrian event.",
       description: (
         <>

@@ -1,9 +1,11 @@
-"use client";
-import React, { useEffect, useRef } from "react";
+ "use client";
+
+import React, { useEffect, useRef, useState } from "react";
 import "./VideoBackground.css";
 
 export default function SectionVideo({ height = "100vh" }) {
   const videoRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const v = videoRef.current;
@@ -11,6 +13,13 @@ export default function SectionVideo({ height = "100vh" }) {
     v.setAttribute("webkit-playsinline", "true");
     v.muted = true;
     v.play().catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   const goToWhoWeAre = () => {
@@ -23,13 +32,15 @@ export default function SectionVideo({ height = "100vh" }) {
       style={{
         position: "relative",
         height, // ahora por defecto "100vh"
-        overflow: "hidden",         // recorta video y máscara a la sección
-        backgroundColor: "transparent",    // transparente para que se vea el fondo global
+        overflow: "hidden", // recorta video y máscara a la sección
+        backgroundColor: "transparent", // transparente para que se vea el fondo global
       }}
     >
       {/* VIDEO: cubre la sección */}
       <video
-        ref={(el) => { videoRef.current = el; }}  // callback-ref válido en JS
+        ref={(el) => {
+          videoRef.current = el;
+        }} // callback-ref válido en JS
         src="/videos/video.mp4"
         preload="metadata"
         playsInline
@@ -46,21 +57,23 @@ export default function SectionVideo({ height = "100vh" }) {
           width: "100%",
           height: "100%",
           objectFit: "cover",
-          zIndex: 0, // video debajo de todo
+          zIndex: 0,
           pointerEvents: "none",
-
-          /* aplicar la máscara PNG: donde la PNG tiene opacidad se muestra el video;
-             donde la PNG es transparente se verá el fondo global porque la sección es transparente */
-          WebkitMaskImage: 'url("/mascaras/mascaraMargenVideo.png")',
-          WebkitMaskRepeat: "no-repeat",
-          WebkitMaskPosition: "bottom center",
-          WebkitMaskSize: "100% auto",
-          WebkitMaskMode: "alpha",
-          maskImage: 'url("/mascaras/mascaraMargenVideo.png")',
-          maskRepeat: "no-repeat",
-          maskPosition: "bottom center",
-          maskSize: "100% auto",
-          maskMode: "alpha",
+          // Aplicar máscara solo en desktop
+          ...(isMobile
+            ? {}
+            : {
+                WebkitMaskImage: 'url("/mascaras/mascaraMargenVideo.png")',
+                WebkitMaskRepeat: "no-repeat",
+                WebkitMaskPosition: "bottom center",
+                WebkitMaskSize: "100% auto",
+                WebkitMaskMode: "alpha",
+                maskImage: 'url("/mascaras/mascaraMargenVideo.png")',
+                maskRepeat: "no-repeat",
+                maskPosition: "bottom center",
+                maskSize: "100% auto",
+                maskMode: "alpha",
+              }),
         }}
       />
 
@@ -106,7 +119,10 @@ export default function SectionVideo({ height = "100vh" }) {
               textShadow: "0 2px 10px rgba(0,0,0,.35)",
             }}
           >
-            A Global Alliance for <em style={{ fontStyle: "italic", fontWeight: 400 }}>Living Culture</em>
+            A Global Alliance for{" "}
+            <em style={{ fontStyle: "italic", fontWeight: 400 }}>
+              Living Culture
+            </em>
           </h1>
           <div style={{ height: 16 }} />
           <button
@@ -133,3 +149,4 @@ export default function SectionVideo({ height = "100vh" }) {
     </section>
   );
 }
+ 

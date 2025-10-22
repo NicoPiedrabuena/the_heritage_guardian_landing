@@ -1,0 +1,27 @@
+{
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/.next/**": true,
+    "**/dist/**": true,
+    "**/build/**": true,
+    "**/.turbo/**": true,
+    "**/.git/**": true,
+    "**/public/images/**": true,
+    "**/public/videos/**": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.turbo": true,
+    "**/public/images": true,
+    "**/public/videos": true
+  },
+  "git.autorefresh": false,
+  "git.enabled": false,
+  "typescript.tsserver.maxTsServerMemory": 4096,
+  "typescript.tsserver.watchOptions": { "watchFile": "useFsEvents", "watchDirectory": "useFsEvents" },
+  "typescript.disableAutomaticTypeAcquisition": true,
+  "js/ts.implicitProjectConfig.checkJs": false
+}
