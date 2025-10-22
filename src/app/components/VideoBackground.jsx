@@ -1,49 +1,35 @@
-"use client"; 
-import React, { useRef, useEffect } from "react";
-export default function VideoBackground() {
-  const videoRef = useRef(null); // <-- removed type annotation
+"use client";
+import React, { useEffect, useRef } from "react";
+import "./VideoBackground.css";
 
-  // scroll suave hacia la sección "who we are"
-  const goToWhoWeAre = () => {
-    const target = document.querySelector('.who-we-are');
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } else {
-      // fallback: pequeño desplazamiento al top si no existe la sección en la página actual
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
+export default function SectionVideo({ height = "100vh" }) {
+  const videoRef = useRef(null);
 
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-
-    // iOS moderno usa playsInline, por compat extra seteamos el legacy via JS
     v.setAttribute("webkit-playsinline", "true");
     v.muted = true;
-
-    const tryPlay = () => v.play().catch(() => {});
-    tryPlay();
-
-    const onFirstTouch = () => {
-      tryPlay();
-      window.removeEventListener("touchstart", onFirstTouch);
-      window.removeEventListener("click", onFirstTouch);
-    };
-    window.addEventListener("touchstart", onFirstTouch, { once: true });
-    window.addEventListener("click", onFirstTouch, { once: true });
-
-    return () => {
-      window.removeEventListener("touchstart", onFirstTouch);
-      window.removeEventListener("click", onFirstTouch);
-    };
+    v.play().catch(() => {});
   }, []);
 
+  const goToWhoWeAre = () => {
+    const target = document.querySelector(".who-we-are");
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
-    <div className="video-container">
+    <section
+      style={{
+        position: "relative",
+        height, // ahora por defecto "100vh"
+        overflow: "hidden",         // recorta video y máscara a la sección
+        backgroundColor: "transparent",    // transparente para que se vea el fondo global
+      }}
+    >
+      {/* VIDEO: cubre la sección */}
       <video
-        ref={videoRef}
-        className="fixed inset-0 w-full h-full object-cover -z-10 pointer-events-none"
+        ref={(el) => { videoRef.current = el; }}  // callback-ref válido en JS
         src="/videos/video.mp4"
         preload="metadata"
         playsInline
@@ -53,23 +39,97 @@ export default function VideoBackground() {
         controls={false}
         disablePictureInPicture
         onLoadedData={() => videoRef.current?.play().catch(() => {})}
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: 0, // video debajo de todo
+          pointerEvents: "none",
+
+          /* aplicar la máscara PNG: donde la PNG tiene opacidad se muestra el video;
+             donde la PNG es transparente se verá el fondo global porque la sección es transparente */
+          WebkitMaskImage: 'url("/mascaras/mascaraMargenVideo.png")',
+          WebkitMaskRepeat: "no-repeat",
+          WebkitMaskPosition: "bottom center",
+          WebkitMaskSize: "100% auto",
+          WebkitMaskMode: "alpha",
+          maskImage: 'url("/mascaras/mascaraMargenVideo.png")',
+          maskRepeat: "no-repeat",
+          maskPosition: "bottom center",
+          maskSize: "100% auto",
+          maskMode: "alpha",
+        }}
       />
-      <div className="video-bottom-tear" aria-hidden />
-      <div className="video-overlay">
-        <div className="video-content">
+
+      {/* (Opcional) Overlay suave para legibilidad */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.05) 70%, rgba(0,0,0,0) 85%)",
+          zIndex: 5,
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* CONTENIDO sobre el video */}
+      <div
+        className="content-video"
+        style={{
+          position: "relative",
+          zIndex: 25, // asegurar que el contenido quede por encima de la máscara
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          padding: "6vh 5vw",
+          color: "#fff",
+          textAlign: "left",
+        }}
+      >
+        <div style={{ maxWidth: 540 }}>
           <img
             src="/logo/logo_white.png"
-            alt="The Heritage Guardian Logo"
-            className="video-logo"
+            alt="The Heritage Guardian"
+            style={{ width: 180, height: "auto", marginBottom: 16 }}
           />
-
-          <h1 className="title-white">
-            A Global Alliance for <em>Living Culture</em>
+          <h1
+            style={{
+              margin: 0,
+              fontSize: "clamp(22px, 3vw, 36px)",
+              lineHeight: 1.25,
+              fontWeight: 600,
+              textShadow: "0 2px 10px rgba(0,0,0,.35)",
+            }}
+          >
+            A Global Alliance for <em style={{ fontStyle: "italic", fontWeight: 400 }}>Living Culture</em>
           </h1>
-
-          <button className="cta-button" onClick={goToWhoWeAre}>Discover the alliance</button>
+          <div style={{ height: 16 }} />
+          <button
+            onClick={goToWhoWeAre}
+            style={{
+              border: "1px solid rgba(255,255,255,.65)",
+              background: "rgba(0,0,0,.25)",
+              color: "#fff",
+              padding: "10px 16px",
+              borderRadius: 12,
+              fontSize: 14,
+              cursor: "pointer",
+              backdropFilter: "blur(2px)",
+            }}
+          >
+            Explore de Nations
+          </button>
         </div>
       </div>
-    </div>
+
+      {/* Nota: la capa de guarda ya no es necesaria porque el video usa la máscara.
+          Asegúrate de que /mascaras/mascaraMargenVideo.png tenga canal alpha
+          (zonas transparentes donde quieras ver el fondo global). */}
+    </section>
   );
 }

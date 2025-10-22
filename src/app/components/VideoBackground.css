@@ -1,0 +1,79 @@
+/* contenedor de la sección */
+.video-container {
+  position: relative;
+  overflow: hidden;
+  background-color: #000; /* fallback mientras carga el video */
+}
+
+/* video: full-bleed en la sección */
+.video-container video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0; /* por debajo de la guarda y del contenido */
+  pointer-events: none;
+}
+
+/* overlay sutil (legibilidad) */
+.video-container .overlay-ambient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.05) 70%, rgba(0,0,0,0) 85%);
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* contenido (logo, título, CTA) */
+.content-video {
+  position: relative;
+  z-index: 20; /* por encima de la guarda */
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 6vh 5vw;
+  color: #fff;
+  text-align: left;
+}
+
+/* guarda/mascara: imagen PNG con transparencia en el centro */
+.video-guard-img {
+  position: absolute;
+  left: 0;
+  bottom: 0;          /* importante: en el borde inferior */
+  width: 100%;
+  height: auto;
+  max-height: 32vh;   /* ajusta cuánto sube la rasgadura en pantallas grandes */
+  z-index: 10;        /* por encima del video (0) y debajo del contenido (20) */
+  pointer-events: none;
+  user-select: none;
+  image-rendering: auto;
+}
+
+/* Responsive tweaks: en móviles la guarda puede ocupar más vh para mantener la forma */
+@media (max-width: 700px) {
+  .video-guard-img {
+    max-height: 38vh;
+  }
+
+  .content-video {
+    padding: 5vh 4vw;
+  }
+}
+
+/* Optional: si quieres usar mask en navegadores que lo soporten, puedes habilitarlo así.
+   Nota: descomentar manualmente si vas a usar mask-image en el video element. */
+/*
+.video-container video {
+  -webkit-mask-image: url("/mascaras/mascaraMargenVideo.png");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: bottom center;
+  -webkit-mask-size: 100% auto;
+  mask-image: url("/mascaras/mascaraMargenVideo.png");
+  mask-repeat: no-repeat;
+  mask-position: bottom center;
+  mask-size: 100% auto;
+}
+*/
