@@ -811,6 +811,11 @@ p, span, li, h1, h2, h3, h4, h5, h6 {
 /* ========================================
    RESPONSIVE
    ======================================== */
+/* globals.css */
+.nav-desktop { display: block; }
+@media (max-width: 767px) {
+  .nav-desktop { display: none; }
+}
 
 @media (max-width: 1024px) {
   .video-title {
