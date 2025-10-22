@@ -46,6 +46,7 @@ export default function TrustedDiplomacy({
   
   const scrollStyle = {
     animation: `tg-scroll ${scrollDurationSec}s linear infinite`,
+    willChange: 'transform',
   };
 
   return (
@@ -55,20 +56,21 @@ export default function TrustedDiplomacy({
     >
       {/* Título */}
       <div className="trusted-diplomacy-title">
-        <TitleWithRule text={<>Trusted by Global <i>Institutions</i></>} className={`trusted-diplomacy-h2 unified-section-title ${isMobile ? 'trusted-diplomacy-h2-mobile' : ''}`} style={{ fontSize: isMobile ? 20 : 36 }} noRule />
-        <div className={`trusted-diplomacy-divider ${isMobile ? 'trusted-diplomacy-divider-mobile' : ''}`} />
+        <TitleWithRule text={<>Trusted by Global <i>Institutions</i></>} className={`trusted-diplomacy-h2 unified-section-title ${isMobile ? 'trusted-diplomacy-h2-mobile' : ''}`} style={{ fontSize: isMobile ? 20 : 36 }} ruleWidth="400px" centerRule="true" />
+    
       </div>
 
       {/* Marquee: imagen duplicada para loop perfecto */}
       <div className="trusted-diplomacy-marquee" aria-label="Institution logos scroller">
         <div className="trusted-diplomacy-scroll" style={scrollStyle}>
-          {/* 1ª mitad */} 
+          {/* 1ª copia */} 
+          <div className="trusted-diplomacy-scroll-item">
             <img
               src={logosSrc}
               alt="Global institutions logos"
               loading="eager"
               decoding="sync"
-              style={{          // más pequeños en móvil, para que entren más íconos visibles
+              style={{
                 width: "auto",
                 maxWidth: "none",
                 height: "auto",
@@ -77,9 +79,12 @@ export default function TrustedDiplomacy({
                 display: "block"
               }}
               onError={(e) => { e.currentTarget.style.visibility = "hidden"; }}
-            /> 
-          {/* 2ª mitad (duplicada para loop) -- aria-hidden para no duplicar lectura */}
-          <div className="trusted-diplomacy-scroll-half" aria-hidden="true" style={{ overflow: 'hidden' }}>
+            />
+          </div>
+          {/* Espacio entre copias para evitar cruce */}
+          <div className="trusted-diplomacy-spacer" aria-hidden="true"></div>
+          {/* 2ª copia (duplicada para loop perfecto) */}
+          <div className="trusted-diplomacy-scroll-item" aria-hidden="true">
             <img
               src={logosSrc}
               alt=""
@@ -101,10 +106,8 @@ export default function TrustedDiplomacy({
 
       {/* Subtítulo: Founder’s Statement con formato de carta, firma y título final (MEJORADO: centrado y énfasis) */}
       <div className={`trusted-diplomacy-subtitle ${isMobile ? 'trusted-diplomacy-subtitle-mobile' : ''}`}>
-       <TitleWithRule text="Founder´s  Statement" className={`trusted-diplomacy-h2 unified-section-title ${isMobile ? 'trusted-diplomacy-h2-mobile' : ''}`} style={{ fontSize: isMobile ? 20 : 36 }} noRule />
-
-        <div className={`trusted-diplomacy-subtitle-divider ${isMobile ? 'trusted-diplomacy-subtitle-divider-mobile' : ''}`} />
-
+       <TitleWithRule text="Founder´s  Statement" className={`trusted-diplomacy-h2 unified-section-title ${isMobile ? 'trusted-diplomacy-h2-mobile' : ''}`} style={{ fontSize: isMobile ? 20 : 36 }}  ruleWidth="355px" centerRule="true" />
+ 
         <div
           className={`founder-statement ${isMobile ? 'founder-statement-mobile' : ''}`}
           style={{

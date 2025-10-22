@@ -2,6 +2,7 @@
 
 import "react-tooltip/dist/react-tooltip.css";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
+import { geoNaturalEarth1 } from "d3-geo";
 import { Tooltip } from "react-tooltip";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -80,10 +81,10 @@ export default function MapSection() {
   })();
   
   return (
-    <section className="map-section">
+    <section id="cultural-map" className="map-section">
       {/* HEADER compactado: agrupar para estilos móviles */}
       <div className="map-header">
-        <TitleWithRule text="Our Global cultural Map" ruleWidth="600px" style={{ fontSize: 'clamp(28px, 4.8vw, 46px)', lineHeight: 1.05, margin: 0 }} />
+        <TitleWithRule text="Our Global cultural Map" ruleWidth="600px" centerRule="true" style={{ fontSize: 'clamp(28px, 4.8vw, 46px)', lineHeight: 1.05, margin: 0 }} />
         {/* Texto actualizado a 9 países y 30+ eventos (más pequeño y centrado) */}
         <p
           className="map-intro"

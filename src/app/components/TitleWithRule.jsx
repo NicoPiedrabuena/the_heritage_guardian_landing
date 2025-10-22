@@ -9,6 +9,7 @@ import React from 'react';
  * - ruleGap: number (px)
  * - noRule: boolean
  * - ruleStyle: object for inline style of the rule
+ * - centerRule: boolean to center the rule line
  */
 export default function TitleWithRule({
   text,
@@ -20,6 +21,7 @@ export default function TitleWithRule({
   ruleGap = 6,
   noRule = false,
   ruleStyle = {},
+  centerRule = false,
   ...rest
 }) {
   const content = text ?? children ?? null;
@@ -57,6 +59,8 @@ export default function TitleWithRule({
             background: 'rgba(0,0,0,0.6)',
             marginTop: ruleGap,
             borderRadius: 2,
+            marginLeft: centerRule ? 'auto' : undefined,
+            marginRight: centerRule ? 'auto' : undefined,
             ...ruleStyle,
           }}
           aria-hidden

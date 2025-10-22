@@ -239,21 +239,21 @@ p, span, li, h1, h2, h3, h4, h5, h6 {
 .navbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 8px 24px;
+  justify-content: space-between; 
   position: relative;
   z-index: 100;
   box-shadow: none;
 }
 
 .navbar-logo {
-  display: flex;
+  display: flex;  
   align-items: center;
 }
 
 .navbar-logo img {
   height: 50px;
   width: auto;
+  margin: 20px;
   box-shadow: none;
   display: block;
 }
@@ -266,7 +266,7 @@ p, span, li, h1, h2, h3, h4, h5, h6 {
   padding: 6px 16px;
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-base);
-  margin-left: 12px;
+  margin-right: 20px;
   outline: none;
   box-shadow: none;
   backdrop-filter: none;
@@ -335,15 +335,26 @@ p, span, li, h1, h2, h3, h4, h5, h6 {
 
 .trusted-diplomacy-scroll {
   display: flex;
-  width: 200%;
+  width: 250%;
   will-change: transform;
+  animation: tg-scroll 35s linear infinite;
+  animation-fill-mode: none;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
-.trusted-diplomacy-scroll-half {
-  width: 50%;
+.trusted-diplomacy-scroll-item {
+  width: 40%;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  backface-visibility: hidden;
+}
+
+.trusted-diplomacy-spacer {
+  width: 15%;
+  flex-shrink: 0;
 }
 
 .trusted-diplomacy-subtitle {
@@ -716,11 +727,11 @@ p, span, li, h1, h2, h3, h4, h5, h6 {
    ======================================== */
 
 @keyframes tg-scroll {
-  from {
+  0% {
     transform: translateX(0%);
   }
-  to {
-    transform: translateX(-50%);
+  100% {
+    transform: translateX(-40%);
   }
 }
 
@@ -853,7 +864,7 @@ p, span, li, h1, h2, h3, h4, h5, h6 {
 
   .map-header {
     width: 100%;
-    text-align: left;
+    text-align: center;
     padding-left: 4vw;
     padding-right: 4vw;
     margin-bottom: 2px; /* aún menos separación arriba del mapa */
@@ -863,12 +874,22 @@ p, span, li, h1, h2, h3, h4, h5, h6 {
     font-size: clamp(20px, 6vw, 28px);
     padding-bottom: 6px;
     margin-bottom: 4px;
+    text-align: center;
   }
 
   .map-intro {
     font-size: 14px;
     margin-bottom: 2px; /* compacto */
     color: var(--color-mapa-copy);
+  }
+
+  /* Asegurar que TitleWithRule esté centrado en mobile */
+  .map-header .title-with-rule-root {
+    text-align: center;
+  }
+
+  .map-header .title-with-rule-h2 {
+    text-align: center;
   }
 
   .map-intro-cta {

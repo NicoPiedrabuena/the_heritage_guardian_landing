@@ -31,9 +31,7 @@ export default function CountryScreen() {
 	return (
 		<div
 			style={{
-				minHeight: "100vh",
-				background:
-					"url('/images/papyrus_bg.jpg') center top/cover repeat-y, #f5ebdb",
+				minHeight: "100vh", 
 				display: "flex",
 				flexDirection: "column",
 				transition: "opacity 0.5s",
@@ -140,17 +138,18 @@ export default function CountryScreen() {
 						justifyContent: "center",
 					}}
 				>
-					{/* Timeline vertical line */}
+					{/* Timeline vertical line con estilo vintage */}
 					<div
 						style={{
 							position: "absolute",
-							left: 120, // <-- mueve la línea más a la derecha
+							left: 120,
 							top: 0,
 							bottom: 0,
-							width: 2,
-							background:
-								"repeating-linear-gradient(to bottom, #bfa77a 0 12px, transparent 12px 24px)",
+							width: 3,
+							background: "linear-gradient(to bottom, #8b4513 0%, #5a3c22 50%, #8b4513 100%)",
+							borderRadius: "2px",
 							zIndex: 0,
+							boxShadow: "0 2px 4px rgba(0,0,0,0.3)",
 						}}
 					/>
 					<div>
@@ -179,30 +178,34 @@ export default function CountryScreen() {
 								>
 									<span
 										style={{
-											fontWeight: 800,
-											fontSize: 28,
-											color: "#5a3c22",
+											fontWeight: 900,
+											fontSize: 32,
+											color: "#2a2017",
 											marginRight: 16,
-											letterSpacing: 1,
-											background: "#fff8ef", // fondo para evitar que la línea pise el año
-											padding: "0 8px",
-											borderRadius: 6,
+											letterSpacing: 2,
+											background: "rgba(255,255,255,0.9)",
+											padding: "4px 12px",
+											borderRadius: 8,
 											position: "relative",
 											zIndex: 3,
+											fontFamily: "serif",
+											boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+											border: "2px solid #8b4513",
 										}}
 									>
 										{item.year}
 									</span>
 									<span
 										style={{
-											width: 22,
-											height: 22,
+											width: 24,
+											height: 24,
 											borderRadius: "50%",
-											background: "#bfa77a",
-											border: "3px solid #fff",
+											background: "linear-gradient(135deg, #8b4513, #5a3c22)",
+											border: "4px solid #fff",
 											display: "inline-block",
 											position: "relative",
 											zIndex: 2,
+											boxShadow: "0 4px 8px rgba(0,0,0,0.3)",
 										}}
 									/>
 								</div>
@@ -245,49 +248,49 @@ export default function CountryScreen() {
 										/>
 									</svg>
 								</div>
-								{/* Card */}
-								<div
-									style={{
-										flex: 1,
-										background: "#fff8ef",
-										borderRadius: 12,
-										boxShadow: "0 2px 12px #0001",
-										padding: 24,
-										minHeight: 160,
-										display: "flex",
-										flexDirection: "column",
-										alignItems: "flex-start",
-										position: "relative",
-										marginLeft: 8,
-										maxWidth: 600,
-									}}
-								>
-									<img
-										src={item.image}
-										alt={item.title}
-										style={{
-											width: "100%",
-											maxWidth: 340,
-											borderRadius: 8,
-											marginBottom: 18,
-											objectFit: "cover",
-										}}
-									/>
+								{/* Card con estilo vintage */}
+								<div  >
+									{/* Imagen con efecto de papel rasgado */}
 									<div
 										style={{
+											position: "relative",
+											width: "100%",
+											maxWidth: 400,
+											marginBottom: 20,
+										}}
+									>
+										<img
+											src={item.image}
+											alt={item.title}
+											style={{
+												width: "100%",
+												borderRadius: 8,
+												objectFit: "cover",
+												filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.2))",
+											}}
+										/>
+									</div>
+									
+									{/* Título principal */}
+									<h3
+										style={{
 											fontWeight: 700,
-											fontSize: 18,
-											color: "#b53a33",
-											marginBottom: 8,
+											fontSize: 20,
+											color: "#2a2017",
+											marginBottom: 12,
+											fontFamily: "serif",
 										}}
 									>
 										{item.title}
-									</div>
+									</h3>
+									
+									{/* Descripción con formato de lista */}
 									<div
 										style={{
-											color: "#5a3c22",
-											fontSize: 15,
-											lineHeight: 1.5,
+											color: "#4d4a45",
+											fontSize: 16,
+											lineHeight: 1.6,
+											fontFamily: "serif",
 										}}
 									>
 										{item.description}
@@ -301,19 +304,32 @@ export default function CountryScreen() {
 			{/* Botón y Footer */}
 			<div style={{ textAlign: "center", margin: "24px 0 0 0" }}>
 				<button
+					onClick={() => {
+						window.location.href = '/#cultural-map';
+					}}
 					style={{
-						background: "#b53a33",
-						color: "#fff",
-						border: "none",
-						borderRadius: 6,
-						padding: "10px 28px",
-						fontWeight: 700,
+						background: "#f4e8d3",
+						color: "#5a3c22",
+						border: "2px solid #5a3c22",
+						borderRadius: "25px",
+						padding: "12px 32px",
+						fontWeight: 600,
 						fontSize: 16,
 						cursor: "pointer",
-						boxShadow: "0 2px 8px #0002",
+						fontFamily: "var(--font-family-primary)",
+						transition: "all 0.3s ease",
+						boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+					}}
+					onMouseEnter={(e) => {
+						e.target.style.background = "#5a3c22";
+						e.target.style.color = "#f4e8d3";
+					}}
+					onMouseLeave={(e) => {
+						e.target.style.background = "#f4e8d3";
+						e.target.style.color = "#5a3c22";
 					}}
 				>
-					See all events
+					Back to Cultural Map
 				</button>
 			</div>
 			<Footer />
