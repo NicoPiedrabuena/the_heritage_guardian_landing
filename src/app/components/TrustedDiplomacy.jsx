@@ -20,7 +20,7 @@ export default function TrustedDiplomacy({
   }, []);
 
   // tamaño de los logos en el marquee: reducir en móvil para mostrar más íconos a la vez
-  const displayLogoHeight = isMobile ? Math.min(logosHeight, 80) : Math.max(logosHeight, 120);
+  const displayLogoHeight = isMobile ? Math.min(logosHeight, 50) : Math.max(logosHeight, 120);
   
   const scrollStyle = {
     animation: `tg-scroll ${scrollDurationSec}s linear infinite`,
@@ -48,7 +48,15 @@ export default function TrustedDiplomacy({
       </div>
 
       {/* Marquee: imagen duplicada para loop perfecto */}
-      <div className="trusted-diplomacy-marquee" aria-label="Institution logos scroller">
+      <div 
+        className="trusted-diplomacy-marquee" 
+        aria-label="Institution logos scroller"
+        style={{
+          overflow: 'hidden',
+          margin: isMobile ? '10px 0' : '20px 0',
+          height: isMobile ? '60px' : 'auto'
+        }}
+      >
         <div className="trusted-diplomacy-scroll" style={scrollStyle}>
           {/* 1ª copia */} 
           <div className="trusted-diplomacy-scroll-item">
@@ -60,10 +68,10 @@ export default function TrustedDiplomacy({
               style={{
                 width: "auto",
                 maxWidth: "none",
-                height: "auto",
-                maxHeight: displayLogoHeight,
+                height: displayLogoHeight,
                 objectFit: "contain",
-                display: "block"
+                display: "block",
+                margin: isMobile ? '5px 0' : '10px 0'
               }}
               onError={(e) => { e.currentTarget.style.visibility = "hidden"; }}
             />
@@ -80,10 +88,10 @@ export default function TrustedDiplomacy({
               style={{
                 width: "auto",
                 maxWidth: "none",
-                height: "auto",
-                maxHeight: displayLogoHeight,
+                height: displayLogoHeight,
                 objectFit: "contain",
-                display: "block"
+                display: "block",
+                margin: isMobile ? '5px 0' : '10px 0'
               }}
               onError={(e) => { e.currentTarget.style.visibility = "hidden"; }}
             />
