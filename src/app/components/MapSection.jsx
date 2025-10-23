@@ -125,7 +125,6 @@ export default function MapSection() {
           <img 
             src="/map/map.png" 
             alt="Global Cultural Map" 
-            useMap="#worldmap"
             style={{
               ...imageStyle,
               width: '100%',
@@ -153,10 +152,12 @@ export default function MapSection() {
                 cursor: 'pointer',
                 pointerEvents: 'auto'
               }}
-              onMouseEnter={(e) => handleCountryHover('Argentina', e)}
-              onMouseLeave={handleCountryLeave}
+              onMouseEnter={!isMobile ? (e) => handleCountryHover('Argentina', e) : undefined}
+              onMouseLeave={!isMobile ? handleCountryLeave : undefined}
+              onTouchStart={isMobile ? (e) => handleCountryHover('Argentina', e) : undefined}
+              onTouchEnd={isMobile ? handleCountryLeave : undefined}
               onClick={() => handleCountryClick('Argentina')}
-              title="Argentina - Click to explore"
+              title={!isMobile ? "Argentina - Click to explore" : undefined}
             />
             
             {/* Brazil */}
@@ -279,8 +280,8 @@ export default function MapSection() {
             />
           </div>
 
-          {/* Country Card Popup */}
-          {hoveredCountry && (
+          {/* Country Card Popup - Solo en desktop */}
+          {hoveredCountry && !isMobile && (
             <div
               style={{
                 position: 'absolute',
@@ -296,7 +297,7 @@ export default function MapSection() {
                 src={`/map-cards/${hoveredCountry === 'Saudi Arabia' ? 'ArabiaSaudita' : hoveredCountry}.png`}
                 alt={`${hoveredCountry} Cultural Information`}
                 style={{
-                  maxWidth: isMobile ? '180px' : '220px',
+                  maxWidth: '220px',
                   width: 'auto',
                   height: 'auto',
                   display: 'block',
