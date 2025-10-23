@@ -34,7 +34,7 @@ export default function Whoweare() {
             style={{
               width: "100%",
               marginTop: "20px",
-              padding: "15px", 
+              padding: "10px", 
             }}
           />
         </div>
