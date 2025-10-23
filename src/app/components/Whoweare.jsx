@@ -3,7 +3,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import TitleWithRule from "./TitleWithRule";
 
-const MASK_URL = "/mascaras/mascara_vertical.png";
+const MASK_URL = "/mascaras/maskwhoweare.png";
 function P({ children }) {
   return (
     <p className="texto-parrafos">
@@ -23,30 +23,39 @@ export default function Whoweare() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  if (isMobile) {
+    return (
+      <section className=""
+>
+        <div>
+          <img
+            src="/images/whoweare.png"
+            alt="Who We Are"
+            style={{
+              width: "100%",
+              marginTop: "20px",
+              padding: "15px", 
+            }}
+          />
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="who-we-are">
-      {/* Columna de texto */}
-      <div className="who-we-are-content">
-        <TitleWithRule text="WHO WE ARE"  style={{ fontSize: 'clamp(18px, 3.2vw, 32px)', lineHeight: 1.05, margin: 0 }} />
-        <P className="">
-          The Heritage Guardian is an <b><i>international cultural alliance</i></b>{" "}
-          dedicated to turning <b><i>living heritage into global presence.</i></b>
-        </P>
-
-        <TitleWithRule text="WHAT WE DO" style={{ fontSize: 'clamp(18px, 3.2vw, 32px)', lineHeight: 1.05, margin: 0 }} />
-        <P className="">
-          We position and promote the <b><i>culture and identity</i></b>, of each country on the global stage through cinematic documentaries, digital capsules, books, and educational content.
-        </P>
-
-        <TitleWithRule text="HOW WE DO IT" style={{ fontSize: 'clamp(18px, 3.2vw, 32px)', lineHeight: 1.05, margin: 0 }} />
-        <P className="">
-          Through <b><i>alliances with ministries, embassies, and cultural institutions.</i></b> <br></br> Also with brands and banks that seek to associate with that identity, becoming cultural sponsors and amplifying international reach.
-        </P>
-        
-        <TitleWithRule text="WHY WE DO IT" style={{ fontSize: 'clamp(18px, 3.2vw, 32px)', lineHeight: 1.05, margin: 0 }} />
-         <P className="">
-          Because culture shared beyond borders becomes influence. Just as <b><i>football unites across borders</i></b>, culture has the same power, to inspire, to connect.<br></br> We believe that <b><i>visibility is preservation</i></b>: it strengthens nation branding, attracts tourism and investment, and secures a cultural legacy for future generations.
-        </P>
+      {/* Columna de imagen */}
+      <div className="who-we-are-content" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <img
+          src="/images/whoweare.png"
+          alt="Who We Are"
+          style={{
+            width: "90%",
+            height: "auto",
+            maxWidth: "600px",
+            objectFit: "contain", 
+          }}
+        />
       </div>
 
       {/* Columna de video (oculta en móvil) */}
@@ -67,9 +76,7 @@ export default function Whoweare() {
             aria-hidden
             style={{
               position: "absolute",
-              inset: 0,
-              background:
-                "linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.05) 35%, rgba(0,0,0,0) 60%)",
+              inset: 0, 
               zIndex: 0,
               pointerEvents: "none",
             }}
@@ -93,20 +100,16 @@ export default function Whoweare() {
               objectFit: "cover",
               background: "transparent",
 
-              /* --- MÁSCARA INVERTIDA (2 capas) --- */
-              WebkitMaskImage: `linear-gradient(#fff,#fff), url(${MASK_URL})`,
-              WebkitMaskRepeat: "no-repeat, no-repeat",
-              WebkitMaskSize: "100% 100%, cover",   // si tu PNG calza exacto: "100% 100%, 100% 100%"
-              WebkitMaskPosition: "center, center",
-              WebkitMaskComposite: "xor",
+              /* --- MÁSCARA NORMAL (mostrar solo la forma) --- */
+              WebkitMaskImage: `url(${MASK_URL})`,
+              WebkitMaskRepeat: "no-repeat",
+              WebkitMaskSize: "cover",
+              WebkitMaskPosition: "center",
 
-              maskImage: `linear-gradient(#fff,#fff), url(${MASK_URL})`,
-              maskRepeat: "no-repeat, no-repeat",
-              maskSize: "100% 100%, cover",
-              maskPosition: "center, center",
-              maskComposite: "exclude",
-
-              boxShadow: "0 8px 24px rgba(0,0,0,.25)",
+              maskImage: `url(${MASK_URL})`,
+              maskRepeat: "no-repeat",
+              maskSize: "cover",
+              maskPosition: "center", 
             }}
           />
 

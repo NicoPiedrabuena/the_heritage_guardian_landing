@@ -82,9 +82,7 @@ export default function SectionVideo({ height = "100vh" }) {
         aria-hidden
         style={{
           position: "absolute",
-          inset: 0,
-          background:
-            "linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.05) 70%, rgba(0,0,0,0) 85%)",
+          inset: 0, 
           zIndex: 5,
           pointerEvents: "none",
         }}
@@ -108,8 +106,7 @@ export default function SectionVideo({ height = "100vh" }) {
           <img
             src="/logo/logo_white.png"
             alt="The Heritage Guardian"
-            style={{ width: 320, height: "auto", marginBottom: 16 }}
-          />
+            style={{ width: 320, height: "auto", marginBottom: 16 }}/>
           <h1
             style={{
               margin: 0,
