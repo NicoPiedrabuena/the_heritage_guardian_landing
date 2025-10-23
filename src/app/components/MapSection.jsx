@@ -90,7 +90,7 @@ export default function MapSection() {
   };
   
   return (
-    <section id="cultural-map" style={sectionStyle}>
+    <section id="cultural-map"  className="cultural-map" style={sectionStyle}>
       <div style={containerStyle}>
         {/* Título */}
         <img 

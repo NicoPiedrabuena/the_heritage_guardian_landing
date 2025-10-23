@@ -23,7 +23,8 @@ export default function SectionVideo({ height = "100vh" }) {
   }, []);
 
   const goToWhoWeAre = () => {
-    const target = document.querySelector(".who-we-are");
+    console.log('click goToWhoWeAre');
+    const target = document.querySelector(".cultural-map");
     if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
