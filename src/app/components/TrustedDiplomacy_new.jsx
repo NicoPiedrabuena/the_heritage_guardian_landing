@@ -1,13 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import React, { useState, useEffect } from "react"; 
-import TitleWithRule from "./TitleWithRule";
+
 export default function TrustedDiplomacy({
   logosSrc, 
   logosHeight = 80,
   scrollDurationSec = 28,
-
 }) {
   // Responsive detection
   const [isMobile, setIsMobile] = useState(false);
@@ -33,12 +31,12 @@ export default function TrustedDiplomacy({
       className={`trusted-diplomacy ${isMobile ? 'trusted-diplomacy-mobile' : ''}`}
     >
       {/* Título */}
-      <div className="trusted-diplomacy-title" style={{ textAlign: 'center', marginBottom: '20px' }}>
+      <div className="trusted-diplomacy-title" style={{ textAlign: 'center', marginBottom: isMobile ? '20px' : '30px' }}>
         <img 
           src="/trusted/tit.png" 
           alt="Trusted by Global Institutions" 
           style={{
-            maxWidth: isMobile ? '90vw' : '70vw',
+            maxWidth: isMobile ? '80vw' : '50vw',
             width: '100%',
             height: 'auto',
             display: 'block',
@@ -91,13 +89,13 @@ export default function TrustedDiplomacy({
         </div>
       </div>
 
-      {/* Founder's Statement - Imagen estática */}
-      <div className={`trusted-diplomacy-subtitle ${isMobile ? 'trusted-diplomacy-subtitle-mobile' : ''}`} style={{ textAlign: 'center', margin: '30px 0' }}>
+      {/* Founder's Statement como imagen */}
+      <div className={`trusted-diplomacy-subtitle ${isMobile ? 'trusted-diplomacy-subtitle-mobile' : ''}`} style={{ textAlign: 'center', margin: isMobile ? '30px 0' : '50px 0' }}>
         <img 
           src="/trusted/text.png" 
-          alt="Founder's Statement" 
+          alt="Founder's Statement with signature and photo" 
           style={{
-            maxWidth: isMobile ? '80vw' : '55vw',
+            maxWidth: isMobile ? '95vw' : '80vw',
             width: '100%',
             height: 'auto',
             display: 'block',
@@ -105,17 +103,14 @@ export default function TrustedDiplomacy({
           }}
         />
       </div>
-     
 
-          
-
-      {/* Título inferior centrado */}
-      <div style={{ textAlign: 'center', marginTop: '30px' }}>
+      {/* Título inferior como imagen */}
+      <div style={{ textAlign: 'center', margin: isMobile ? '30px 0 20px' : '50px 0 40px' }}>
         <img 
           src="/trusted/footer.png" 
           alt="Together, we preserve the living heartbeat of world cultures" 
           style={{
-            maxWidth: isMobile ? '90vw' : '70vw',
+            maxWidth: isMobile ? '90vw' : '60vw',
             width: '100%',
             height: 'auto',
             display: 'block',

@@ -1,287 +1,326 @@
 "use client";
 
-import "react-tooltip/dist/react-tooltip.css";
-import { ComposableMap, Geographies, Geography } from "react-simple-maps";
-import { geoNaturalEarth1 } from "d3-geo";
-import { Tooltip } from "react-tooltip";
-import React, { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
-import TitleWithRule from "./TitleWithRule";
-// importa la lista global
-import { ACTIVE_COUNTRIES } from "../../countryData";
-
-const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
+import React, { useEffect, useState } from "react";
 
 export default function MapSection() {
-  const headerRef = useRef(null);
-  const mapRef = useRef(null); // ref al contenedor del mapa para posicionar la card
-  const footerRef = useRef(null);
-  const [windowWidth, setWindowWidth] = useState(1200);
-  const router = useRouter();
-  const [hovered, setHovered] = useState(null); // { name, slug }
-  const [hoverPos, setHoverPos] = useState({ x: 0, y: 0 });
-
-  const colors = {
-    baseFill: "var(--color-mapa-base)",
-    activeFill: "var(--color-mapa-activo)",
-    stroke:   "var(--color-mapa-stroke)",
-    title:    "var(--color-mapa-titulo)",
-    copy:     "var(--color-mapa-copy)",
-    accent:   "var(--color-mapa-accent)",
-  };
+  // Responsive hook
+  const [isMobile, setIsMobile] = useState(false);
+  const [hoveredCountry, setHoveredCountry] = useState(null);
+  const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    const updateWidth = () => setWindowWidth(window.innerWidth);
-    updateWidth();
-    window.addEventListener("resize", updateWidth);
-    return () => window.removeEventListener("resize", updateWidth);
+    const handleResize = () => setIsMobile(window.innerWidth < 700);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // simple flag para estilos responsive en este componente
-  const isMobile = windowWidth < 700;
+  // Lista de países activos basada en la imagen
+  const activeCountries = [
+    'Argentina', 'Brazil', 'Mexico', 'Morocco', 'Saudi Arabia', 'India', 'Indonesia', 'Mongolia'
+  ];
 
-  // estilos inline para las métricas: en fila, centradas; en móvil permiten scroll horizontal
-  const metricsStyle = {
-    display: "flex",
-    flexDirection: "row",
-    gap: isMobile ? 12 : 28,
-    justifyContent: isMobile ? "space-between" : "center",
-    alignItems: "center",
-    flexWrap: isMobile ? "wrap" : "nowrap",         // permite 2 filas en móvil
-    overflowX: isMobile ? "visible" : "auto",
-    padding: isMobile ? "8px 6px" : "12px 0",
-    width: "100%",
-    boxSizing: "border-box"
+  const handleCountryHover = (country, event) => {
+    setHoveredCountry(country);
+    const mapContainer = event.currentTarget.closest('div').parentElement;
+    const rect = mapContainer.getBoundingClientRect();
+    
+    // Calcular posición para que el popup no se salga de pantalla
+    let x = event.clientX - rect.left;
+    let y = event.clientY - rect.top;
+    
+    // Ajustar posición si está muy cerca del borde derecho
+    if (x > rect.width * 0.7) {
+      x = x - 270; // Ancho aproximado del popup + margen
+    } else {
+      x = x + 15;
+    }
+    
+    // Ajustar posición si está muy cerca del borde superior
+    if (y < 120) {
+      y = y + 20;
+    } else {
+      y = y - 100;
+    }
+    
+    setHoverPosition({ x, y });
   };
 
-  const handleCountryClick = (name) => {
-    // Navega a la pantalla del país
-    router.push(`/country/${encodeURIComponent(name)}`);
+  const handleCountryLeave = () => {
+    setHoveredCountry(null);
   };
 
-  // helper: slug simple para buscar imagen/flag
-  const toSlug = (name = "") =>
-    name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+  const handleCountryClick = (country) => {
+    // Navegar a la página del país
+    const countryPath = country.toLowerCase().replace(' ', '');
+    window.location.href = `/country/${countryPath}`;
+  };
 
-  // escala responsive: valores ajustados para mostrar el mapamundi completo
-  const scale = (() => {
-    if (windowWidth < 360) return 70;
-    if (windowWidth < 480) return 80;
-    if (windowWidth < 768) return 95;
-    if (windowWidth < 1024) return 140;
-    return 200;
-  })();
+  const sectionStyle = {
+    position: 'relative',
+    width: '100vw',
+    minHeight: isMobile ? 'auto' : '100vh', 
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: isMobile ? '10px 5px' : '40px 20px',
+    boxSizing: 'border-box',
+    margin: '0',
+    left: '50%',
+    right: '50%',
+    marginLeft: '-50vw',
+    marginRight: '-50vw'
+  };
 
-  // configuración de proyección: usar una versión "normal" en móvil para evitar zoom extraño
-  const projectionConfig = (() => {
-    // aumentar escala en móviles para que el mapa se vea más grande
-    if (windowWidth < 360) return { scale: 130, center: [0, 0] };   // very small screens — mayor
-    if (windowWidth < 600) return { scale: 180, center: [0, 0] };  // mobile: mostrar mundo más grande
-    return { scale, center: [0, 10] };                             // tablet/desktop: configuración más amplia
-  })();
+  const containerStyle = {
+    position: 'relative',
+    width: '100%',
+    maxWidth: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: isMobile ? '8px' : '25px'
+  };
+
+  const imageStyle = {
+    maxWidth: '100%',
+    height: 'auto',
+    display: 'block'
+  };
   
   return (
-    <section id="cultural-map" className="map-section">
-      {/* HEADER compactado: agrupar para estilos móviles */}
-      <div className="map-header">
-        <TitleWithRule text="Our Global cultural Map" ruleWidth="600px" centerRule="true" style={{ fontSize: 'clamp(28px, 4.8vw, 46px)', lineHeight: 1.05, margin: 0 }} />
-        {/* Texto actualizado a 9 países y 30+ eventos (más pequeño y centrado) */}
-        <p
-          className="map-intro"
+    <section id="cultural-map" style={sectionStyle}>
+      <div style={containerStyle}>
+        {/* Título */}
+        <img 
+          src="/map/titulo.png" 
+          alt="Our Global Cultural Map" 
           style={{
-            lineHeight: 1.05,
-            margin: isMobile ? '8px 0 6px' : '12px 0 6px',
-            fontWeight: 600,
-            fontSize: isMobile ? 13 : 16,
-            textAlign: 'center'
+            ...imageStyle,
+            maxWidth: isMobile ? '90vw' : '70vw',
+            width: '100%'
           }}
-        >
-          In 9 countries, documenting 30+ iconic cultural events with ministries, embassies, and institutions worldwide.
-        </p>
+        />
 
-        <div
-          className="map-intro-cta"
+        {/* Click instruction */}
+        <img 
+          src="/map/click.png" 
+          alt="Click on a highlighted country to see more" 
           style={{
-            textAlign: 'center',
-            fontSize: isMobile ? 13 : 15,
-            marginBottom: isMobile ? 6 : 10
+            ...imageStyle,
+            maxWidth: isMobile ? '15vw' : '20vw',
+            width: '100%'
           }}
-        >
-          <span style={{ lineHeight: 1.05, fontWeight: 700 }}>
-            Click <span style={{ color: colors.accent }}>on</span> a highlighted country to see more
-          </span>
-        </div>
-      </div> 
+        />
 
-      {/* MAP CONTAINER — ahora el CSS controla altura/proporción */}
-      <div
-        ref={mapRef}
-        className={`map-container ${windowWidth < 600 ? 'map-container-mobile' : ''}`}
-        style={{ position: "relative" }} // defensa adicional si CSS no aplica
-      >
-        <ComposableMap
-          projection="geoNaturalEarth1"
-          projectionConfig={projectionConfig}
-          width={1000}
-          height={600}
-          preserveAspectRatio="xMidYMid meet"
-          style={{
-            width: "100%",     // rellena el contenedor sin deformar
-            height: "100%",
-            background: "transparent",
-          }}
-        >
-          <Geographies geography={GEO_URL}>
-            {({ geographies }) =>
-              geographies
-                .filter((geo) => geo.properties.name !== "Antarctica")
-                .map((geo) => {
-                  const name = geo.properties.name;
-                  const isActive = ACTIVE_COUNTRIES.includes(name);
-                  return (
-                    <Geography
-                      key={geo.rsmKey}
-                      geography={geo}
-                      data-tooltip-id="map-tip"
-                      data-tooltip-content={name}
-                      onClick={() => { if (isActive) handleCountryClick(name); }}
-                      onMouseEnter={(evt) => {
-                        if (!isActive) return;
-                        const rect = mapRef.current?.getBoundingClientRect();
-                        const x = evt.clientX - (rect?.left || 0);
-                        const y = evt.clientY - (rect?.top || 0);
-                        setHovered({ name, slug: toSlug(name) });
-                        setHoverPos({ x, y });
-                      }}
-                      onMouseMove={(evt) => {
-                        if (!isActive) return;
-                        const rect = mapRef.current?.getBoundingClientRect();
-                        const x = evt.clientX - (rect?.left || 0);
-                        const y = evt.clientY - (rect?.top || 0);
-                        setHoverPos({ x, y });
-                      }}
-                      onMouseLeave={() => {
-                        setHovered(null);
-                      }}
-                      style={{
-                        default: {
-                          fill: isActive ? colors.activeFill : colors.baseFill,
-                          stroke: colors.stroke,
-                          strokeWidth: 0.6,
-                          outline: "none",
-                          cursor: isActive ? "pointer" : "default",
-                        },
-                        hover: {
-                          fill: isActive ? "#c77a4a" : "#efe0c8",
-                          outline: "none",
-                          cursor: isActive ? "pointer" : "default",
-                        },
-                        pressed: {
-                          fill: isActive ? "#c77a4a" : "#efe0c8",
-                          outline: "none",
-                          cursor: isActive ? "pointer" : "default",
-                        },
-                      }}
-                    />
-                  );
-                })
-             }
-           </Geographies>
-         </ComposableMap>
+        {/* Map with hover areas */}
+        <div style={{ 
+          position: 'relative', 
+          maxWidth: isMobile ? '85vw' : '60vw',
+          width: '100%',
+          marginTop: isMobile ? '2px' : '10px',
+          marginBottom: isMobile ? '2px' : '10px'
+        }}>
+          <img 
+            src="/map/map.png" 
+            alt="Global Cultural Map" 
+            useMap="#worldmap"
+            style={{
+              ...imageStyle,
+              width: '100%',
+              cursor: 'default'
+            }}
+          />
+          
+          {/* Overlay con áreas de hover más precisas */}
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            pointerEvents: 'none'
+          }}>
+            {/* Argentina */}
+            <div
+              style={{
+                position: 'absolute',
+                left: '28%',
+                top: '80%',
+                width: '4%',
+                height: '8%',
+                cursor: 'pointer',
+                pointerEvents: 'auto'
+              }}
+              onMouseEnter={(e) => handleCountryHover('Argentina', e)}
+              onMouseLeave={handleCountryLeave}
+              onClick={() => handleCountryClick('Argentina')}
+              title="Argentina - Click to explore"
+            />
+            
+            {/* Brazil */}
+            <div
+              style={{
+                position: 'absolute',
+                left: '30%',
+                top: '62%',
+                width: '6%',
+                height: '12%',
+                cursor: 'pointer',
+                pointerEvents: 'auto'
+              }}
+              onMouseEnter={(e) => handleCountryHover('Brazil', e)}
+              onMouseLeave={handleCountryLeave}
+              onClick={() => handleCountryClick('Brazil')}
+              title="Brazil - Click to explore"
+            />
+            
+            {/* Mexico */}
+            <div
+              style={{
+                position: 'absolute',
+                left: '18%',
+                top: '48%',
+                width: '5%',
+                height: '6%',
+                cursor: 'pointer',
+                pointerEvents: 'auto'
+              }}
+              onMouseEnter={(e) => handleCountryHover('Mexico', e)}
+              onMouseLeave={handleCountryLeave}
+              onClick={() => handleCountryClick('Mexico')}
+              title="Mexico - Click to explore"
+            />
+            
+            {/* Morocco */}
+            <div
+              style={{
+                position: 'absolute',
+                left: '44%',
+                top: '43%',
+                width: '3%',
+                height: '4%',
+                cursor: 'pointer',
+                pointerEvents: 'auto'
+              }}
+              onMouseEnter={(e) => handleCountryHover('Morocco', e)}
+              onMouseLeave={handleCountryLeave}
+              onClick={() => handleCountryClick('Morocco')}
+              title="Morocco - Click to explore"
+            />
+            
+            {/* Saudi Arabia */}
+            <div
+              style={{
+                position: 'absolute',
+                left: '57%',
+                top: '48%',
+                width: '4%',
+                height: '5%',
+                cursor: 'pointer',
+                pointerEvents: 'auto'
+              }}
+              onMouseEnter={(e) => handleCountryHover('Saudi Arabia', e)}
+              onMouseLeave={handleCountryLeave}
+              onClick={() => handleCountryClick('Saudi Arabia')}
+              title="Saudi Arabia - Click to explore"
+            />
+            
+            {/* India */}
+            <div
+              style={{
+                position: 'absolute',
+                left: '66%',
+                top: '48%',
+                width: '4%',
+                height: '8%',
+                cursor: 'pointer',
+                pointerEvents: 'auto'
+              }}
+              onMouseEnter={(e) => handleCountryHover('India', e)}
+              onMouseLeave={handleCountryLeave}
+              onClick={() => handleCountryClick('India')}
+              title="India - Click to explore"
+            />
+            
+            {/* Indonesia */}
+            <div
+              style={{
+                position: 'absolute',
+                left: '75%',
+                top: '62%',
+                width: '6%',
+                height: '4%',
+                cursor: 'pointer',
+                pointerEvents: 'auto'
+              }}
+              onMouseEnter={(e) => handleCountryHover('Indonesia', e)}
+              onMouseLeave={handleCountryLeave}
+              onClick={() => handleCountryClick('Indonesia')}
+              title="Indonesia - Click to explore"
+            />
+            
+            {/* Mongolia */}
+            <div
+              style={{
+                position: 'absolute',
+                left: '72%',
+                top: '34%',
+                width: '5%',
+                height: '4%',
+                cursor: 'pointer',
+                pointerEvents: 'auto'
+              }}
+              onMouseEnter={(e) => handleCountryHover('Mongolia', e)}
+              onMouseLeave={handleCountryLeave}
+              onClick={() => handleCountryClick('Mongolia')}
+              title="Mongolia - Click to explore"
+            />
+          </div>
 
-        {/* Hover card para países activos */}
-        {hovered && (
-          (() => {
-            const cardW = windowWidth < 600 ? 180 : 220;
-            const cardH = 120;
-            const container = mapRef.current;
-            const maxLeft = (container?.clientWidth || 0) - cardW - 8;
-            const left = Math.max(8, Math.min(maxLeft, hoverPos.x + 12));
-            const top = Math.max(8, hoverPos.y - cardH - 12);
-            const imgSrc = `/banners/${hovered.slug}.png`; // ahora carga desde public/banners/
-            const flagFallback = `/flags/${hovered.slug}.png`;
-            console.log(imgSrc);
-            return (
-              <div
-                className="map-hover-card"
+          {/* Country Card Popup */}
+          {hoveredCountry && (
+            <div
+              style={{
+                position: 'absolute',
+                left: hoverPosition.x,
+                top: hoverPosition.y,
+                pointerEvents: 'none',
+                zIndex: 1000,
+                filter: 'drop-shadow(0 6px 20px rgba(0,0,0,0.3))',
+                transition: 'all 0.15s ease-in-out'
+              }}
+            >
+              <img 
+                src={`/map-cards/${hoveredCountry === 'Saudi Arabia' ? 'ArabiaSaudita' : hoveredCountry}.png`}
+                alt={`${hoveredCountry} Cultural Information`}
                 style={{
-                  position: "absolute",
-                  left,
-                  top,
-                  width: cardW,
-                  background: "#ffffff",
-                  borderRadius: 10,
-                  boxShadow: "0 10px 30px rgba(0,0,0,0.25)",
-                  overflow: "hidden",
-                  zIndex: 40,
-                  pointerEvents: "none" // solo informativo
+                  maxWidth: isMobile ? '180px' : '220px',
+                  width: 'auto',
+                  height: 'auto',
+                  display: 'block',
+                  margin: 0,
+                  padding: 0,
+                  border: 'none',
+                  borderRadius: '8px'
                 }}
-              >
-                <div style={{ width: "100%", height: 70, overflow: "hidden", background: "#222" }}>
-                  <img
-                    src={imgSrc}
-                    alt={hovered.name}
-                    onError={(e) => { e.currentTarget.src = flagFallback; e.currentTarget.style.objectFit = "contain"; }}
-                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                  />
-                </div>
-                <div style={{ padding: "8px 10px" }}> 
-                  <div style={{ fontSize: 12, color: "#666", marginTop: 4 }}>Click to see more</div>
-                </div>
-              </div>
-            );
-          })()
-        )}
-      </div>
+              />
+            </div>
+          )}
+        </div>
 
-      {/* FOOTER / MÉTRICAS compactas */}
-      <div ref={footerRef} className="map-metrics" style={metricsStyle} aria-label="Map metrics">
-        <Metric big="+ 500M" caption="Global Impressions" isMobile={isMobile} />
-        <Metric big="+ 9"    caption="Countries"            isMobile={isMobile} />
-        <Metric big="+ 30"   caption="Cultural Events"      isMobile={isMobile} />
-        <Metric big="+ 7"    caption="Institutional Alliances" isMobile={isMobile} />
+        {/* Statistics */}
+        <img 
+          src="/map/stat.png" 
+          alt="Statistics: +500M Global Impressions, +9 Countries, +30 Cultural Events, +7 Institutional Alliances" 
+          style={{
+            ...imageStyle,
+            maxWidth: isMobile ? '30vw' : '40vw',
+            width: '100%'
+          }}
+        />
       </div>
-
-      <Tooltip
-        id="map-tip"
-        place="top"
-        style={{
-          padding: "6px 8px",
-          fontSize: "0.85rem",
-          background: "rgba(0,0,0,.85)",
-          color: "white",
-          borderRadius: 6,
-          border: "1px solid rgba(255,255,255,.12)",
-        }}
-      />
     </section>
-  );
-}
-
-function Metric({ big, caption, isMobile = false }) {
-  // tamaño más compacto en móvil
-  const bigStyle = {
-    fontSize: isMobile ? "clamp(18px, 8vw, 28px)" : undefined,
-    fontWeight: undefined
-  };
-  const captionStyle = {
-    fontSize: isMobile ? 12 : undefined,
-    marginTop: 6
-  };
-  const containerStyle = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    minWidth: isMobile ? "48%" : 140,    // en móvil cada métrica ocupa ~48% para formar dos columnas
-    flex: isMobile ? "0 0 48%" : "0 0 auto",
-    boxSizing: "border-box",
-    padding: isMobile ? "8px 6px" : undefined
-  };
-
-  return (
-    <div className="map-metric" style={containerStyle}>
-      <div className="map-metric-big" style={bigStyle}>{big}</div>
-      <div className="map-metric-caption" style={captionStyle}>{caption}</div>
-    </div>
   );
 }

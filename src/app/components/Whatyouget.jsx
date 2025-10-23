@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from "react";
-import PapyrusCard from "./PapyrusCard"; 
-import TitleWithRule from "./TitleWithRule";
- 
 
 export default function Joining() {
-  const Emph = ({ children }) => (
-    <em className="title-emphasis">
-      {children}
-    </em>
-  );
-
   // Responsive hook
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -19,129 +10,115 @@ export default function Joining() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Unified responsive styles
-  const styles = {
-    section: {
-      padding: isMobile ? '20px 12px' : '48px 20px',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center'
-    },
-    description: {
-      fontSize: isMobile ? 14 : 16,
-      marginBottom: isMobile ? 8 : 12,
-      textAlign: 'center',
-      maxWidth: isMobile ? '98vw' : 980
-    },
-    grid: {
-      display: 'grid',
-      gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, minmax(420px, 1fr))',
-      gap: isMobile ? 12 : 20,
-      width: isMobile ? '100%' : 'min(1180px, 100%)',
-      marginTop: isMobile ? 8 : 16,
-      justifyItems: 'center'
-    },
-    cardInner: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'flex-start', // start at top so titles align
-      height: '100%',
-      textAlign: 'center',
-      paddingTop: isMobile ? 22 : 50,    // más espacio arriba 
-      paddingLeft: isMobile ? 12 : 20,
-      paddingRight: isMobile ? 12 : 20
-    },
-    cardTitle: {
-      fontWeight: 700,
-      margin: 0,
-      marginBottom: '12px',
-      fontSize: isMobile ? 18 : 22,
-      minHeight: isMobile ? 48 : 56 // garantiza que todos los títulos queden a la misma altura
-    },
-    cardText: {
-      fontSize: isMobile ? 15 : 18,
-      lineHeight: 1.6
-    },
-    paragraph: {
-      marginTop: isMobile ? 14 : 26,
-      maxWidth: isMobile ? '98vw' : 980,
-      fontSize: isMobile ? 16 : 20,
-      lineHeight: 1.5,
-      fontStyle: 'italic',
-      textAlign: 'center'
-    },
-    highlight: {
-      color: '#b53a33',
-      fontWeight: 700,
-      fontStyle: 'italic',
-      display: 'inline-block',
-      fontSize: isMobile ? 16 : 20
-    }
+  const sectionStyle = {
+    position: 'relative',
+    width: '100%',
+    minHeight: '100vh', 
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: isMobile ? '40px 20px' : '60px 40px',
+    boxSizing: 'border-box'
   };
 
-  // Card style to make papyrus wider than tall and increase outer shadow
-  const cardStyle = {
-    width: isMobile ? '100%' : 'min(520px, 100%)',
-    aspectRatio: isMobile ? '3/2' : '16/9', // ensures wider than tall
-    boxShadow: '0 18px 40px rgba(0,0,0,0.45)',
-    borderRadius: 12,
-    overflow: 'hidden'
+  const containerStyle = {
+    position: 'relative',
+    width: '100%',
+    maxWidth: '1200px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: isMobile ? '20px' : '30px'
+  };
+
+  const imageStyle = {
+    maxWidth: '100%',
+    height: 'auto',
+    display: 'block'
   };
 
   return (
-    <section
-      className={`joining-alliance ${isMobile ? 'joining-alliance-mobile' : ''}`}
-      style={styles.section}
-    >
-     <TitleWithRule  text="WHAT YOU GET"  ruleWidth="450px"  style={{ fontSize: 'clamp(30px, 3.2vw, 60px)', lineHeight: 1.05, margin: 0 }} />
- 
+    <section style={sectionStyle}>
+      <div style={containerStyle}>
+        {/* Título */}
+        <img 
+          src="/whatyouget/tit.png" 
+          alt="WHAT YOU GET" 
+          style={{
+            ...imageStyle,
+            maxWidth: isMobile ? '600px' : ''
+          }}
+        />
 
-      <div style={{ fontSize: 'clamp(12px, 3.2vw, 30px)', lineHeight: 1.05, margin: 0 , paddingTop: isMobile ? 12 : 20}}>
-        What it means to join the Alliance:
+        {/* Subtítulo */}
+        <img 
+          src="/whatyouget/sub.png" 
+          alt="What it means to join the Alliance:" 
+          style={{
+            ...imageStyle,
+            maxWidth: isMobile ? '250px' : ''
+          }}
+        />
+
+        {/* Cards container */}
+        <div style={{
+          display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row',
+          gap: isMobile ? '20px' : '30px',
+          width: '100%',
+          justifyContent: 'center',
+          alignItems: isMobile ? 'center' : 'flex-start',
+          marginTop: isMobile ? '20px' : ''
+        }}>
+          {/* Cultural Film Card */}
+          <img 
+            src="/whatyouget/c.png" 
+            alt="Cultural Film" 
+            style={{
+              ...imageStyle,
+              maxWidth: isMobile ? '280px' : '',
+              flex: isMobile ? 'none' : '1'
+            }}
+          />
+
+          {/* Photographic Archive Card */}
+          <img 
+            src="/whatyouget/p.png" 
+            alt="Photographic Archive" 
+            style={{
+              ...imageStyle,
+              maxWidth: isMobile ? '280px' : '',
+              flex: isMobile ? 'none' : '1'
+            }}
+          />
+
+          {/* Global Visibility Card */}
+          <img 
+            src="/whatyouget/g.png" 
+            alt="Global Visibility" 
+            style={{
+              ...imageStyle,
+              maxWidth: isMobile ? '280px' : '',
+              flex: isMobile ? 'none' : '1'
+            }}
+          />
+        </div>
+
+        {/* Footer */}
+        <img 
+          src="/whatyouget/footer.png" 
+          alt="Your heritage deserves more than preservation. It deserves a place in the global narrative." 
+          style={{
+            ...imageStyle,
+            maxWidth: isMobile ? '300px' : '600px',
+            marginTop: isMobile ? '30px' : '50px'
+          }}
+        />
       </div>
-
-      <div style={styles.grid}>
-        <PapyrusCard style={cardStyle}>
-          <div style={styles.cardInner}>
-            <h3 style={styles.cardTitle}>CULTURAL FILM</h3>
-            <div style={styles.cardText}>
-              A <span style={{ color: "#b53a33", fontWeight: 700, fontStyle: "italic" }}>
-                cinematic documentary
-              </span> as cultural legacies to promote your nation's identity or associate your brand with its most iconic events, plus short digital features for your own channels.
-            </div>
-          </div>
-        </PapyrusCard>
-
-        <PapyrusCard style={cardStyle}>
-          <div style={styles.cardInner}>
-            <h3 style={styles.cardTitle}>PHOTOGRAPHIC ARCHIVE</h3>
-            <div style={styles.cardText}>
-              A <span style={{ color: "#b53a33", fontWeight: 700, fontStyle: "italic" }}>
-                curated collection of photographs
-              </span> ready to boost tourism, press, and official communication.
-            </div>
-          </div>
-        </PapyrusCard>
-
-        <PapyrusCard style={cardStyle}>
-          <div style={styles.cardInner}>
-            <h3 style={styles.cardTitle}>GLOBAL VISIBILITY</h3>
-            <div style={styles.cardText}>
-              Opportunities for placement on leading <span style={{ color: "#b53a33", fontWeight: 700, fontStyle: "italic" }}>
-                international platforms
-              </span> such as National Geographic and History Channel, with amplification across <span style={{ color: "#b53a33", fontWeight: 700, fontStyle: "italic" }}>
-                The Heritage Guardian channels
-              </span>
-            </div>
-          </div>
-        </PapyrusCard>
-      </div>
-
-      <p style={styles.paragraph}>
-        Your heritage deserves more than preservation. <br />
-        It deserves a place in the <span style={styles.highlight}>global narrative</span>.
-      </p>
     </section>
   );
 }
