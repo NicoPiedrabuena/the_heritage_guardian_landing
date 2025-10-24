@@ -64,7 +64,7 @@ export default function Whoweare() {
           style={{
             flex: "1 1 360px",
             minWidth: 280,
-            maxWidth: 460,
+            maxWidth: 600,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",

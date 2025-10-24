@@ -103,25 +103,11 @@ export default function SectionVideo({ height = "100vh" }) {
           textAlign: "left",
         }}
       >
-        <div style={{ maxWidth: 540 }}>
+        <div style={{ maxWidth: 1040 , marginBottom: -300}}>
           <img
-            src="/logo/logo_white.png"
+            src="/logo/heroLogo.png"
             alt="The Heritage Guardian"
-            style={{ width: 320, height: "auto", marginBottom: 16 }}/>
-          <h1
-            style={{
-              margin: 0,
-              fontSize: "clamp(22px, 3vw, 36px)",
-              lineHeight: 1.25,
-              fontWeight: 600,
-              textShadow: "0 2px 10px rgba(0,0,0,.35)",
-            }}
-          >
-            A Global Alliance for{" "}
-            <em style={{ fontStyle: "italic", fontWeight: 400 }}>
-              Living Culture
-            </em>
-          </h1>
+            style={{ width: 467, height: "auto", marginBottom: 16 }}/> 
           <div style={{ height: 16 }} />
           <button
             onClick={goToWhoWeAre}
@@ -129,9 +115,9 @@ export default function SectionVideo({ height = "100vh" }) {
               border: "1px solid rgba(255,255,255,.65)",
               background: "rgba(0,0,0,.25)",
               color: "#fff",
-              padding: "10px 16px",
-              borderRadius: 12,
-              fontSize: 14,
+              padding: "12px 22px",
+              borderRadius: 20,
+              fontSize: 18,
               cursor: "pointer",
               backdropFilter: "blur(2px)",
             }}
