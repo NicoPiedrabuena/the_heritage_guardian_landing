@@ -118,9 +118,7 @@ export default function MapSection() {
         <div style={{ 
           position: 'relative', 
           maxWidth: isMobile ? '85vw' : '60vw',
-          width: '100%',
-          marginTop: isMobile ? '2px' : '10px',
-          marginBottom: isMobile ? '2px' : '10px'
+          width: '100%', 
         }}>
           <img 
             src="/map/map.png" 
