@@ -107,7 +107,11 @@ export default function SectionVideo({ height = "100vh" }) {
           <img
             src="/logo/heroLogo.png"
             alt="The Heritage Guardian"
-            style={{ width: 467, height: "auto", marginBottom: 16 }}/> 
+            style={{
+              width: isMobile ? 340 : 467,   // ↓ ajustá el valor “mobile” a gusto
+              height: "auto",
+              marginBottom: 16
+            }}/> 
           <div style={{ height: 16 }} />
           <button
             onClick={goToWhoWeAre}

@@ -32,7 +32,7 @@ export default function Whoweare() {
             src="/images/whoweare.png"
             alt="Who We Are"
             style={{
-              width: "100%",
+              width: isMobile ?  "98%" : "100%",   //
               marginTop: "20px",
               padding: "10px", 
             }}

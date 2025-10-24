@@ -20,8 +20,7 @@ export default function Joining() {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
-    padding: isMobile ? '40px 20px' : '60px 40px',
+    justifyContent: 'center', 
     boxSizing: 'border-box'
   };
 
