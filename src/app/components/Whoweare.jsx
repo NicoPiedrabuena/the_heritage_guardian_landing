@@ -83,7 +83,7 @@ export default function Whoweare() {
           />
           <video
             ref={videoRef}
-            src="/videos/video.mp4"
+            src="/videos/videoVertical.mp4"
             preload="metadata"
             playsInline
             muted
