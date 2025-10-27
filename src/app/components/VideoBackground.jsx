@@ -42,7 +42,7 @@ export default function SectionVideo({ height = "100vh" }) {
         ref={(el) => {
           videoRef.current = el;
         }} // callback-ref válido en JS
-        src="/videos/video.mp4"
+        src="/videos/videito.mp4"
         preload="metadata"
         playsInline
         muted
