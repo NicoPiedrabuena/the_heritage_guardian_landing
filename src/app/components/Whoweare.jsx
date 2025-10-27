@@ -50,7 +50,7 @@ export default function Whoweare() {
           src="/images/whoweare.png"
           alt="Who We Are"
           style={{
-            width: "90%",
+            width: "76%",
             height: "auto",
             maxWidth: "600px",
             objectFit: "contain", 

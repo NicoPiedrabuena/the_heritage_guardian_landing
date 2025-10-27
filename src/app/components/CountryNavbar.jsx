@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { ACTIVE_COUNTRIES } from "../../countryData";
+import { ACTIVE_COUNTRIES } from "../../activeCountries";
 
 export default function CountryNavbar() {
   const router = useRouter();
@@ -16,10 +16,12 @@ export default function CountryNavbar() {
     <nav className="navbar">
       {/* Logo */}
       <div className="navbar-logo"> 
+           <a href="/" aria-label="Go to homepage" style={{ display: "inline-block" }}>
         <img
           src="/logo/logo.png"
           alt="Logo"
         />
+        </a>
       </div>
       {/* Dropdown */}
       <select

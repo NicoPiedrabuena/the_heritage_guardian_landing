@@ -239,6 +239,127 @@ p, span, li, h1, h2, h3, h4, h5, h6 {
   width: 15%;
   flex-shrink: 0;
 }
+/* ===== Reset seguro para evitar herencias raras ===== */
+.thg-footer {
+  color: #fff;
+  font-family: "Work Sans","WorkSans",system-ui,-apple-system,sans-serif;
+  background: transparent;            /* el bg ya lo das inline */
+  padding: 36px 0 18px;               /* como la captura */
+  margin-top: 0;                       /* sin huecos extra arriba */
+  text-align: initial;
+}
+
+/* Contenedor general (limita el ancho) */
+.thg-wrap {
+  max-width: 1220px;                  /* ancho visual de la maqueta */
+  margin: 0 auto;  
+  padding: 0 24px;                    /* sangría lateral sutil */
+  box-sizing: border-box;
+}
+
+/* Panel sin borde (la captura no tiene marco) */
+.thg-panel {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr 1fr;  /* logo + 3 columnas */
+  align-items: start;
+   column-gap:84px;   /* antes era 48px */
+  row-gap: 28px;                    /* separación horizontal más aire */
+  padding: 0;                        /* sin relleno extra */
+}
+
+/* Logo */
+.logo-img {
+  width: 176px;                      /* proporción como la imagen */
+  height: auto;
+  display: block;
+}
+
+/* Titulares de columnas */
+.thg-col h4 {
+  font-size: 12px;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.9);
+}
+
+/* Texto y enlaces */
+.thg-col p,
+.thg-col a {
+  font-size: 15px;
+  line-height: 1.58;
+  color: rgba(255,255,255,0.92) !important;
+  text-decoration: none;
+}
+.thg-col a:hover { text-decoration: underline; }
+
+/* Sección FOLLOW US */
+.thg-follow .icons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Íconos circulares */
+.icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.55);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  transition: transform .15s ease, border-color .15s ease, background-color .15s ease;
+}
+.icon svg { width: 17px; height: 17px; }
+.icon:hover {
+  transform: translateY(-1px);
+  border-color: #fff;
+  background-color: rgba(255,255,255,0.06);
+}
+
+/* Copyright centrado debajo (sin desplazamientos) */
+.thg-copyright {
+  margin-top: 16px;
+  text-align: center !important;
+  font-size: 12px;
+  color: rgba(255,255,255,0.78);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 980px) {
+  .thg-panel { grid-template-columns: 1fr 1fr;  column-gap: 36px;
+    row-gap: 22px; }
+  .thg-brand { grid-column: 1 / -1; }
+  .logo-img { width: 148px; }
+}
+@media (max-width: 560px) {
+  .thg-panel { grid-template-columns: 1fr; gap: 16px; }
+  .thg-wrap { padding: 0 18px; }
+  .logo-img { width: 132px; }
+  .thg-col h4 { font-size: 11.5px; }
+  .thg-col p, .thg-col a { font-size: 14.5px; }
+  .icon { width: 32px; height: 32px; }
+   .thg-follow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;   /* centra el bloque */
+    text-align: center;
+  }
+
+  /* Centra la fila de íconos */
+  .thg-follow .icons {
+    display: flex;
+    justify-content: center;   /* ⬅️ centra los íconos */
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin: 6px 0 0;           /* aire bajo el título */
+  }
+  .icon svg { width: 16px; height: 16px; }
+}
 
 /* Mobile adjustments for marquee */
 @media (max-width: 700px) {
