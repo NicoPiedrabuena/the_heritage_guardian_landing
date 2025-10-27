@@ -7,7 +7,7 @@ import Footer from "../../components/Footer";
 /** Manifest por país (JS puro) */
 const TIMELINE_MANIFEST = {
   argentina: {
-    banner: "/timeline/argentina/Argentina.png",
+    banner: "/timeline/argentina/argentina.png",
     text: "/timeline/argentina/text.png",
 	footer: "/timeline/argentina/footer.png",
     layers: [
