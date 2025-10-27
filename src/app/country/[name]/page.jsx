@@ -7,7 +7,7 @@ import Footer from "../../components/Footer";
 /** Manifest por país (JS puro) */
 const TIMELINE_MANIFEST = {
   argentina: {
-    banner: "/timeline/argentina/argentina.png",
+    banner: "/timeline/argentina/Argentina.png",
     text: "/timeline/argentina/text.png",
 	footer: "/timeline/argentina/footer.png",
     layers: [
@@ -116,7 +116,7 @@ const TIMELINE_MANIFEST = {
     ],
   },
   morocco: {
-    banner: "/timeline/morocco/morocco.png",
+    banner: "/timeline/morocco/Morocco.png",
     text: "/timeline/morocco/text.png",
 		footer: "/timeline/morocco/footer.png",
     layers: [
@@ -164,7 +164,7 @@ const TIMELINE_MANIFEST = {
     ],
   },
   india: {
-    banner: "/timeline/india/india.png",
+    banner: "/timeline/india/India.png",
     text: "/timeline/india/text.png",
 	footer: "/timeline/india/footer.png",
     layers: [
@@ -212,7 +212,7 @@ const TIMELINE_MANIFEST = {
     ],
   },
   mongolia: {
-    banner: "/timeline/mongolia/mongolia.png",
+    banner: "/timeline/mongolia/Mongolia.png",
     text: "/timeline/mongolia/text.png",
     footer: "/timeline/mongolia/footer.png",
     layers: [
@@ -260,7 +260,7 @@ const TIMELINE_MANIFEST = {
     ],
   },
   brazil: {
-    banner: "/timeline/brazil/brazil.png",
+    banner: "/timeline/brazil/Brazil.png",
     text: "/timeline/brazil/text.png",
     footer: "/timeline/brazil/footer.png",
     layers: [
@@ -308,7 +308,7 @@ const TIMELINE_MANIFEST = {
     ],
   },
   mexico: {
-    banner: "/timeline/mexico/mexico.png",
+    banner: "/timeline/mexico/Mexico.png",
     text: "/timeline/mexico/text.png",
     footer: "/timeline/mexico/footer.png",
     layers: [
@@ -356,7 +356,7 @@ const TIMELINE_MANIFEST = {
     ],
   },
   indonesia: {
-    banner: "/timeline/indonesia/indonesia.png",
+    banner: "/timeline/indonesia/Indonesia.png",
     text: "/timeline/indonesia/text.png",
     footer: "/timeline/indonesia/footer.png",
     layers: [
