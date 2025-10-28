@@ -1,9 +1,8 @@
- "use client";
+"use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import "./VideoBackground.css";
 
-export default function SectionVideo({ height = "100vh" }) {
+export default function SectionVideo({ height = "100svh" }) {
   const videoRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -23,7 +22,6 @@ export default function SectionVideo({ height = "100vh" }) {
   }, []);
 
   const goToWhoWeAre = () => {
-    console.log('click goToWhoWeAre');
     const target = document.querySelector(".cultural-map");
     if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
   };
@@ -32,16 +30,17 @@ export default function SectionVideo({ height = "100vh" }) {
     <section
       style={{
         position: "relative",
-        height, // ahora por defecto "100vh"
-        overflow: "hidden", // recorta video y máscara a la sección
-        backgroundColor: "transparent", // transparente para que se vea el fondo global
+        height,                 // usa 100svh por defecto
+        minHeight: 480,         // no colapses en pantallas muy bajas
+        overflow: "clip",       // recorta con mejor perf que hidden
+        backgroundColor: "transparent",
       }}
     >
-      {/* VIDEO: cubre la sección */}
+      {/* VIDEO de fondo con máscara en desktop */}
       <video
         ref={(el) => {
           videoRef.current = el;
-        }} // callback-ref válido en JS
+        }}
         src="/videos/videito.mp4"
         preload="metadata"
         playsInline
@@ -53,88 +52,75 @@ export default function SectionVideo({ height = "100vh" }) {
         onLoadedData={() => videoRef.current?.play().catch(() => {})}
         style={{
           position: "absolute",
-          top: 0,
-          left: 0,
+          inset: 0,
           width: "100%",
           height: "100%",
           objectFit: "cover",
           zIndex: 0,
           pointerEvents: "none",
-          // Aplicar máscara solo en desktop
           ...(isMobile
             ? {}
             : {
                 WebkitMaskImage: 'url("/mascaras/mascaraMargenVideo.png")',
                 WebkitMaskRepeat: "no-repeat",
                 WebkitMaskPosition: "bottom center",
-                WebkitMaskSize: "100% auto",
+                WebkitMaskSize: "cover",   // 👈 clave: cubre siempre la sección
                 WebkitMaskMode: "alpha",
                 maskImage: 'url("/mascaras/mascaraMargenVideo.png")',
                 maskRepeat: "no-repeat",
                 maskPosition: "bottom center",
-                maskSize: "100% auto",
+                maskSize: "cover",
                 maskMode: "alpha",
               }),
         }}
       />
 
-      {/* (Opcional) Overlay suave para legibilidad */}
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          inset: 0, 
-          zIndex: 5,
-          pointerEvents: "none",
-        }}
-      />
-
       {/* CONTENIDO sobre el video */}
       <div
-        className="content-video"
         style={{
-          position: "relative",
-          zIndex: 25, // asegurar que el contenido quede por encima de la máscara
-          height: "100%",
+          position: "absolute",
+          zIndex: 25,
+          // Anclado estable: se adapta con clamp; nada de márgenes negativos
+          left: "clamp(16px, 5vw, 120px)",
+          bottom: "clamp(72px, 12vh, 180px)",
+          right: "clamp(16px, 5vw, 80px)",
           display: "flex",
-          alignItems: "center",
-          padding: "6vh 5vw",
+          flexDirection: "column",
+          alignItems: "flex-start",
           color: "#fff",
-          textAlign: "left",
+          pointerEvents: "auto",
         }}
       >
-        <div style={{ maxWidth: 1040 , marginBottom: -300}}>
-          <img
-            src="/logo/heroLogo.png"
-            alt="The Heritage Guardian"
-            style={{
-              width: isMobile ? 340 : 467,   // ↓ ajustá el valor “mobile” a gusto
-              height: "auto",
-              marginBottom: 16
-            }}/> 
-          <div style={{ height: 16 }} />
-          <button
-            onClick={goToWhoWeAre}
-            style={{
-              border: "1px solid rgba(255,255,255,.65)",
-              background: "rgba(0,0,0,.25)",
-              color: "#fff",
-              padding: "12px 22px",
-              borderRadius: 20,
-              fontSize: 18,
-              cursor: "pointer",
-              backdropFilter: "blur(2px)",
-            }}
-          >
-            Explore de Nations
-          </button>
-        </div>
-      </div>
+        <img
+          src="/logo/heroLogo.png"
+          alt="The Heritage Guardian"
+          style={{
+            width: isMobile ? "clamp(220px, 60vw, 360px)" : "clamp(320px, 26vw, 520px)",
+            height: "auto",
+            display: "block",
+            marginBottom: 16,
+            filter: "drop-shadow(0 2px 8px rgba(0,0,0,.45))",
+          }}
+          loading="eager"
+        />
 
-      {/* Nota: la capa de guarda ya no es necesaria porque el video usa la máscara.
-          Asegúrate de que /mascaras/mascaraMargenVideo.png tenga canal alpha
-          (zonas transparentes donde quieras ver el fondo global). */}
+        <button
+          onClick={goToWhoWeAre}
+          style={{
+            border: "1px solid rgba(255,255,255,.65)",
+            background: "rgba(0,0,0,.25)",
+            color: "#fff",
+            padding: "12px 22px",
+            borderRadius: 20,
+            fontSize: "clamp(14px, 1.8vw, 18px)",
+            cursor: "pointer",
+            backdropFilter: "blur(2px)",
+            boxShadow: "0 2px 10px rgba(0,0,0,.25)",
+          }}
+        >
+          Explore de Nations
+        </button>
+      </div>
     </section>
   );
 }
- 
