@@ -499,7 +499,7 @@ export default function CountryScreen() {
           width: "100%",
           display: "flex",
           justifyContent: "center",
-          padding: isMobile ? "16px 12px 24px" : "24px 16px 32px",
+          padding: isMobile ? "0px 0px 0px" : "24px 16px 32px",
         }}
       >
         <div
@@ -528,10 +528,7 @@ export default function CountryScreen() {
               <div
                 key={`${layer.src}-${i}`}
                 style={{
-                  width: isMobile ? "86%" : "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  position: "relative",
+                  width: isMobile ? "96%" : "100%",  
                   marginTop: layer.marginTop || 0,
                   marginBottom: layer.marginBottom || 0,
                   zIndex: layer.zIndex || 2,
@@ -626,6 +623,7 @@ export default function CountryScreen() {
       <div style={{ textAlign: "center", margin: isMobile ? "36px 10px 120px 0" : "50px 10px 240px 0" }}>
         <button
            onClick={() => window.open("https://www.instagram.com/nachosaso/?hl=en", "_blank", "noopener,noreferrer")}
+
           style={{
             color: "#5a3c22",
             border: "2px solid #5a3c22",
