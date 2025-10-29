@@ -83,7 +83,7 @@ const TIMELINE_MANIFEST = {
         overlayVideos: [
           // EJEMPLOS — cambia videoId y posiciones a gusto
           {
-            videoId: "f6QFJUkORmQ", // <- reemplaza por tu ID de YouTube
+            videoId: "JTGcQ535Rc0", // <- reemplaza por tu ID de YouTube
             top: "0%",  // distancia desde el borde superior de la imagen
             left: "42%", // distancia desde el borde izquierdo
             width: "50%", // ancho del video
@@ -96,7 +96,7 @@ const TIMELINE_MANIFEST = {
     }
           },
           {
-            videoId: "JTGcQ535Rc0",
+            videoId: "HbOXc7ohSS8",
             top: "58%",
            left: "42%", // distancia desde el borde izquierdo
             width: "50%", // ancho del video
