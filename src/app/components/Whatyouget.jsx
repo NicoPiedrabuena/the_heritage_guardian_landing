@@ -88,7 +88,7 @@ export default function Joining() {
             style={{
               ...imgResponsive,
               maxWidth: isMobile ? "600px" : "800px",
-              margin: "0 auto",
+              margin: "0 ",
             }}
             loading="lazy"
           />
