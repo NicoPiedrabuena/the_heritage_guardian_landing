@@ -6,12 +6,43 @@ export default function SectionVideo({ height = "100svh" }) {
   const videoRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
 
+  // Autoplay resiliente (móviles y desktop)
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-    v.setAttribute("webkit-playsinline", "true");
+
+    // Asegurar inline + muted ANTES de reproducir
+    v.setAttribute("playsinline", "");
+    v.setAttribute("webkit-playsinline", "");
+    v.setAttribute("muted", "");
+    v.defaultMuted = true;
     v.muted = true;
-    v.play().catch(() => {});
+    v.autoplay = true;
+    v.preload = "metadata";
+
+    const tryPlay = () => v.play().catch(() => {});
+
+    // 1) Intento inmediato
+    tryPlay();
+
+    // 2) Reintentos suaves
+    const onVis = () => document.visibilityState === "visible" && tryPlay();
+    const onScroll = () => tryPlay();
+    document.addEventListener("visibilitychange", onVis);
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    // 3) Último recurso: primer toque en cualquier parte
+    const onFirstPointer = () => {
+      tryPlay();
+      window.removeEventListener("pointerdown", onFirstPointer, true);
+    };
+    window.addEventListener("pointerdown", onFirstPointer, true);
+
+    return () => {
+      document.removeEventListener("visibilitychange", onVis);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("pointerdown", onFirstPointer, true);
+    };
   }, []);
 
   useEffect(() => {
@@ -30,57 +61,64 @@ export default function SectionVideo({ height = "100svh" }) {
     <section
       style={{
         position: "relative",
-        height,                 // usa 100svh por defecto
+        height,                 // 100svh por defecto
         minHeight: 480,         // no colapses en pantallas muy bajas
-        overflow: "clip",       // recorta con mejor perf que hidden
+        overflow: "clip",
         backgroundColor: "transparent",
       }}
     >
-      {/* VIDEO de fondo con máscara en desktop */}
-      <video
-        ref={(el) => {
-          videoRef.current = el;
-        }}
-        src="/videos/videito.mp4"
-        preload="metadata"
-        playsInline
-        muted
-        loop
-        autoPlay
-        controls={false}
-        disablePictureInPicture
-        onLoadedData={() => videoRef.current?.play().catch(() => {})}
+      {/* Wrapper con máscara (aplica también en mobile) */}
+      <div
         style={{
           position: "absolute",
           inset: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
           zIndex: 0,
-          pointerEvents: "none",
-          ...(isMobile
-            ? {}
-            : {
-                WebkitMaskImage: 'url("/mascaras/mascaraMargenVideo.png")',
-                WebkitMaskRepeat: "no-repeat",
-                WebkitMaskPosition: "bottom center",
-                WebkitMaskSize: "cover",   // 👈 clave: cubre siempre la sección
-                WebkitMaskMode: "alpha",
-                maskImage: 'url("/mascaras/mascaraMargenVideo.png")',
-                maskRepeat: "no-repeat",
-                maskPosition: "bottom center",
-                maskSize: "cover",
-                maskMode: "alpha",
-              }),
+          // --- Máscara universal (incluye prefijos WebKit para iOS/Android) ---
+          WebkitMaskImage: 'url("/mascaras/mascaraMargenVideo.png")',
+          WebkitMaskRepeat: "no-repeat",
+          WebkitMaskPosition: "bottom center",
+          WebkitMaskSize: "cover",
+          WebkitMaskComposite: "source-over",
+          maskImage: 'url("/mascaras/mascaraMargenVideo.png")',
+          maskRepeat: "no-repeat",
+          maskPosition: "bottom center",
+          maskSize: "cover",
+          // Forzar composición por GPU en móviles
+          willChange: "transform",
+          transform: "translateZ(0)",
         }}
-      />
+      >
+        {/* VIDEO de fondo (sin máscara directa) */}
+        <video
+          ref={(el) => {
+            videoRef.current = el;
+          }}
+          src="/videos/videito.mp4"
+          poster="/videos/videito_poster.jpg"
+          preload="metadata"
+          playsInline
+          muted
+          loop
+          autoPlay
+          controls={false}
+          disablePictureInPicture
+          onLoadedData={() => videoRef.current?.play().catch(() => {})}
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            pointerEvents: "none",
+          }}
+        />
+      </div>
 
       {/* CONTENIDO sobre el video */}
       <div
         style={{
           position: "absolute",
           zIndex: 25,
-          // Anclado estable: se adapta con clamp; nada de márgenes negativos
           left: "clamp(16px, 5vw, 120px)",
           bottom: "clamp(72px, 12vh, 180px)",
           right: "clamp(16px, 5vw, 80px)",
