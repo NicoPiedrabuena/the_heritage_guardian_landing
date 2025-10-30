@@ -110,16 +110,16 @@ export default function TrustedDiplomacy({
       </div>
 
       {/* Título inferior */}
-      <div style={{ textAlign: "center", marginTop: "80px" }}>
+      <div style={{ marginTop: "80px" }}>
         <img
           src="/trusted/footer.png"
           alt="Together, we preserve the living heartbeat of world cultures"
           style={{
-            maxWidth: isMobile ? "90vw" : "70vw",
+            
             width: "100%",
             height: "auto",
             display: "block",
-            margin: "0 auto",
+            margin: "0 ",
           }}
         />
       </div>
