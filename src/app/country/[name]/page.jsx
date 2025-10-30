@@ -611,7 +611,7 @@ export default function CountryScreen() {
         src={manifest.footer}
         alt={countryTitle}
         style={{
-          width: isMobile ? "min(92vw, 540px)" : "min(90vw, 1200px)",
+          width: isMobile ? "min(92vw, 540px)" : "min(90vw, 1000px)",
           height: "auto",
           display: "block",
           margin: isMobile ? "24px auto 0" : "40px auto 0",

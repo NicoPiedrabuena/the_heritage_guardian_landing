@@ -93,7 +93,7 @@ export default function SectionVideo({ height = "100svh" }) {
           ref={(el) => {
             videoRef.current = el;
           }}
-          src="/videos/videito.mp4"
+          src={isMobile ? "/videos/videitoVertical.mp4" : "/videos/videito.mp4"}
           poster="/videos/videito_poster.jpg"
           preload="metadata"
           playsInline
