@@ -116,7 +116,7 @@ export default function TrustedDiplomacy({
           alt="Together, we preserve the living heartbeat of world cultures"
           style={{
             
-            width: "100%",
+            width: "94%",
             height: "auto",
             display: "block",
             margin: "0 ",

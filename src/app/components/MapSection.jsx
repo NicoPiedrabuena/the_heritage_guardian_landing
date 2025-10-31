@@ -195,12 +195,12 @@ export default function MapSection() {
             <div
               style={{
                 position: 'absolute',
-                left: '44%',
+                left: '42%',
                 top: '43%',
-                width: '3%',
-                height: '4%',
+                width: '5%',
+                height: '8%',
                 cursor: 'pointer',
-                pointerEvents: 'auto'
+                pointerEvents: 'auto', 
               }}
               onMouseEnter={(e) => handleCountryHover('Morocco', e)}
               onMouseLeave={handleCountryLeave}
@@ -217,7 +217,7 @@ export default function MapSection() {
                 width: '4%',
                 height: '5%',
                 cursor: 'pointer',
-                pointerEvents: 'auto'
+                pointerEvents: 'auto', 
               }}
               onMouseEnter={(e) => handleCountryHover('Saudi Arabia', e)}
               onMouseLeave={handleCountryLeave}

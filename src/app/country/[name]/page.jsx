@@ -241,7 +241,7 @@ const TIMELINE_MANIFEST = {
           },
           {
             videoId: "JTGcQ535Rc0",
-            top: "54%",
+            top: "44%",
            left: "34%", // distancia desde el borde izquierdo
             width: "50%", // ancho del video
             title: "Horses & Humans",
