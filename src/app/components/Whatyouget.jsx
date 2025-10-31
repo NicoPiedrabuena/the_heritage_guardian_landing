@@ -87,7 +87,7 @@ export default function Joining() {
             alt="WHAT YOU GET"
             style={{
               ...imgResponsive,
-              maxWidth: isMobile ? "600px" : "800px",
+              maxWidth: isMobile ? "600px" : "1400px",
               margin: "0 ",
             }}
             loading="lazy"
@@ -97,7 +97,7 @@ export default function Joining() {
             alt="What it means to join the Alliance:"
             style={{
               ...imgResponsive,
-              maxWidth: isMobile ? "250px" : "520px",
+              maxWidth: isMobile ? "250px" : "820px",
               margin: "0 auto",
             }}
             loading="lazy"
