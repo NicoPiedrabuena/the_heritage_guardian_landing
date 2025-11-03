@@ -98,7 +98,7 @@ export default function MapSection() {
           alt="Our Global Cultural Map" 
           style={{
             ...imageStyle,
-            maxWidth: isMobile ? "560px" : "1300px", 
+            maxWidth: isMobile ? "585px" : "1600px", 
           }}
         />
 
@@ -108,7 +108,7 @@ export default function MapSection() {
           alt="Click on a highlighted country to see more" 
           style={{
             ...imageStyle,
-            maxWidth: isMobile ? '15vw' : '20vw',
+            maxWidth: isMobile ? "120px" : "300px", 
             width: '100%'
           }}
         />

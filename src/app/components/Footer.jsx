@@ -23,7 +23,7 @@ export default function Footer() {
 
             {/* ⬇️ Forzar un solo renglón */}
             <p className="thg-tagline">
-              A&nbsp;Global&nbsp;Alliance&nbsp;for&nbsp;Living&nbsp;Culture
+            Visibility&nbsp;is&nbsp;Preservation
             </p>
           </div>
 
