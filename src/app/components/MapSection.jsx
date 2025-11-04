@@ -314,7 +314,7 @@ export default function MapSection() {
           alt="Statistics: +500M Global Impressions, +9 Countries, +30 Cultural Events, +7 Institutional Alliances" 
           style={{
             ...imageStyle,
-            maxWidth: isMobile ? '30vw' : '40vw',
+            maxWidth: isMobile ? "270px" : "900px", 
             width: '100%'
           }}
         />
