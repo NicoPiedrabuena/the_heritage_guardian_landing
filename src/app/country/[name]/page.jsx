@@ -496,7 +496,7 @@ export default function CountryScreen() {
       {/* === LAYERS / TIMELINE === */}
       <div
         style={{
-          width: "100%",
+          width: "90%",
           display: "flex",
           justifyContent: "center",
           padding: isMobile ? "0px 0px 0px" : "24px 16px 32px",
