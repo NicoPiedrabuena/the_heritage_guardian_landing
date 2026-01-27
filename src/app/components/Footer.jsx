@@ -29,7 +29,7 @@ export default function Footer() {
 
           {/* HQ */}
           <div className="thg-col">
-            <p>UBICATION</p>
+            <p>LOCATION</p>
             <p>
               Buenos Aires, Argentina —<br /> Projects worldwide.
             </p>
